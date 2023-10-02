@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .center-all {
+    @apply c98-flex c98-justify-center c98-items-center;
+  }
+
+  :root {
+    --title-text: #fafafa;
+    --primary-bg: #151515;
+    --secondary-bg: #202020;
+    --third-bg: #252525;
+    --sub-title: #606060;
+  }
+  :root[data-theme='light'] {
+    --title-text: #151515;
+    --primary-bg: #fff;
+    --secondary-bg: #fafafa;
+    --third-bg: #f0f0f0;
+    --sub-title: #858585;
+  }
+}
+
+.svg-icon {
+  filter: invert(100%) sepia(0%) saturate(44%) hue-rotate(236deg) brightness(101%) contrast(110%);
+  /* transition: all 0.2s ease-in-out; */
+}
+
+.svg-icon-color {
+  filter: invert(85%) sepia(60%) saturate(1807%) hue-rotate(324deg) brightness(90%) contrast(76%);
+}
+
+.svg-hover:hover > img {
+  filter: invert(57%) sepia(52%) saturate(416%) hue-rotate(3deg) brightness(102%) contrast(101%);
+  transition: all 0.2s ease-in-out;
+}
+
+.svg-hover-color:hover > img {
+  filter: invert(76%) sepia(50%) saturate(523%) hue-rotate(356deg) brightness(91%) contrast(89%);
+  transition: all 0.2s ease-in-out;
+}
+
+.svg-hover:hover > :is(p, button) {
+  color: #cda349;
+  transition: all 0.2s ease-in-out;
+}
+
+.svg-hover-color:hover > :is(p, button) {
+  color: #ddb54c;
+  transition: all 0.2s ease-in-out;
+}
+
+.svg-active > img {
+  filter: invert(57%) sepia(52%) saturate(416%) hue-rotate(3deg) brightness(102%) contrast(101%);
+}
+
+.svg-active > p {
+  color: #cda349;
+}
+
+/* LIGHT MODE */
+[data-theme='light'] img.svg-icon {
+  filter: invert(0%) sepia(8%) saturate(1328%) hue-rotate(334deg) brightness(93%) contrast(84%);
+  /* transition: all 0.2s ease-in-out; */
+}
+
+[data-theme='light'] .svg-hover:hover > img {
+  filter: invert(57%) sepia(52%) saturate(416%) hue-rotate(3deg) brightness(102%) contrast(101%);
+  transition: all 0.2s ease-in-out;
+}
+
+[data-theme='light'] .svg-hover:hover > :is(p, button) {
+  color: #cda349;
+  transition: all 0.2s ease-in-out;
+}
+
+[data-theme='light'] .svg-active > img {
+  filter: invert(57%) sepia(52%) saturate(416%) hue-rotate(3deg) brightness(102%) contrast(101%);
+}
+
+[data-theme='light'] .svg-active > p {
+  color: #cda349;
+}
+
+/* CUSTOM CSS */
+.custom-backdrop-blur {
+  backdrop-filter: blur(4px);
+}

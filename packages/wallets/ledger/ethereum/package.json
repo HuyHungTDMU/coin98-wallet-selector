@@ -1,0 +1,28 @@
+{
+  "name": "@coin98t/wallet-adapter-ledger-ethereum",
+  "version": "0.0.36",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "exports": {
+    ".": "./dist"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "node_modules/.bin/tsup",
+    "dev": "node_modules/.bin/tsup --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "tsup": "^6.6.3",
+    "web3-core": "^1.8.2"
+  },
+  "dependencies": {
+    "@coin98t/wallet-adapter-base": "workspace:*",
+    "@ledgerhq/hw-app-eth": "^6.26.0",
+    "@ledgerhq/hw-transport-webhid": "^6.24.1",
+    "@ledgerhq/hw-transport-web-ble": "^6.24.1",
+    "@ledgerhq/hw-transport": "^6.24.1"
+  }
+}

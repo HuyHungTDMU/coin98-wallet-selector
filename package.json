@@ -1,0 +1,38 @@
+{
+  "name": "coin98-connector",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/**/**/**/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --no-cache --parallel --continue",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish-packages": "turbo run build && changeset version && changeset publish",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml",
+    "setup": "pnpm install",
+    "reinstall": "pnpm run clean && pnpm run setup",
+    "update": "pnpm update -r --latest"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.4.3",
+    "@commitlint/config-conventional": "^17.4.3",
+    "eslint-config-custom": "workspace:*",
+    "husky": "^8.0.3",
+    "prettier": "latest",
+    "prettier-plugin-tailwindcss": "^0.5.3",
+    "turbo": "^1.10.4",
+    "typescript": "^4.9.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "packageManager": "pnpm@8.6.10",
+  "dependencies": {
+    "@changesets/cli": "^2.26.0"
+  }
+}

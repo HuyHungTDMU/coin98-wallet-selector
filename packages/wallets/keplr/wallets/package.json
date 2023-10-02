@@ -1,0 +1,24 @@
+{
+  "name": "@coin98t/wallet-adapter-keplr",
+  "version": "0.0.36",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./dist"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "tsup": "^6.6.3"
+  },
+  "dependencies": {
+    "@coin98t/wallet-adapter-base": "workspace:*",
+    "@coin98t/wallet-adapter-keplr-cosmos": "workspace:*"
+  }
+}

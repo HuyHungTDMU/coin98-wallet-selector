@@ -1,0 +1,26 @@
+{
+  "name": "@coin98t/wallet-adapter-walletconnect",
+  "version": "0.0.36",
+  "sideEffects": false,
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*",
+    "tsup": "^6.6.3"
+  },
+  "dependencies": {
+    "@coin98t/wallet-adapter-base": "workspace:*",
+    "@coin98t/wallet-adapter-walletconnect-ethereum": "workspace:*",
+    "@coin98t/wallet-adapter-walletconnect-solana": "workspace:*",
+    "@solana/web3.js": "^1.58.0",
+    "@walletconnect/types": "^2.8.5"
+  }
+}

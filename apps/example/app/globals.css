@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import '@coin98t/wallet-adapter-react-ui/styles.css';
+
+@layer base {
+  :root {
+    --bgPrimary: #faf2d3;
+    --textPrimary: black;
+    --textSecondary: #053b50;
+    min-height: 100%;
+  }
+
+  .layout {
+    background-color: var(--bgPrimary);
+  }
+
+  [data-theme='dark'] {
+    --bgPrimary: #2c3333;
+    --textPrimary: #fafafa;
+    --textSecondary: #053b50;
+  }
+}
