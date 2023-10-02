@@ -1,5 +1,5 @@
 {
-  "name": "tsconfig",
+  "name": "@coin98t/tsconfig",
   "version": "0.0.36",
   "private": true,
   "files": [

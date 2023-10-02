@@ -1,5 +1,5 @@
 {
-  "name": "coin98-connector",
+  "name": "@coin98t/coin98-connector",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
-    "eslint-config-custom": "workspace:*",
+    "@coin98t/eslint-config-custom": "workspace:*",
     "husky": "^8.0.3",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "^0.5.3",
