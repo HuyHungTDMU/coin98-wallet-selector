@@ -1,6 +1,6 @@
 {
   "name": "@coin98t/wallet-adapter-walletconnect-ethereum",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "exports": {
@@ -13,7 +13,7 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@coin98t/tsconfig": "workspace:*",
+    "tsconfig": "workspace:*",
     "tsup": "^6.6.3"
   },
   "dependencies": {
@@ -22,6 +22,6 @@
     "@walletconnect/sign-client": "^2.8.5",
     "@walletconnect/types": "^2.8.5",
     "@walletconnect/utils": "^2.8.5",
-    "web3-core": "^1.8.2"
+    "web3-types": "^1.2.0"
   }
 }

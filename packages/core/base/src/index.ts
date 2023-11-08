@@ -3,6 +3,7 @@ export * from './errors';
 export * from './signer.js';
 export * from './standard.js';
 export * from './transaction.js';
-export * from './types';
+export * from './types/evm-solana-cosmos';
 export * from './utils';
 export * from './constants';
+export * from './types';

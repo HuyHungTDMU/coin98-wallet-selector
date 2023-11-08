@@ -121,6 +121,10 @@ export class PhantomWalletAdapterSolana extends BaseMessageSignerWalletAdapterSo
     return this._readyState;
   }
 
+  get provider() {
+    return this._wallet;
+  }
+
   async autoConnect(): Promise<void> {
     // Skip autoconnect in the Loadable state
     // We can't redirect to a universal link without user input

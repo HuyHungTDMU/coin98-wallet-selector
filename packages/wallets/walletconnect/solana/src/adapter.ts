@@ -60,6 +60,10 @@ export class WalletConnectWalletAdapterSolana extends BaseSignerWalletAdapterSol
     return this._readyState;
   }
 
+  get provider() {
+    return this._wallet;
+  }
+
   async connect(chainId?: string): Promise<void> {
     const network = getNetworkFromChainId(chainId);
     try {

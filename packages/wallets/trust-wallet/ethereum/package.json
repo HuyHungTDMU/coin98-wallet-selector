@@ -1,6 +1,6 @@
 {
   "name": "@coin98t/wallet-adapter-trust-wallet-ethereum",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "main": "dist/index.js",
@@ -14,9 +14,9 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@coin98t/tsconfig": "workspace:*",
+    "tsconfig": "workspace:*",
     "tsup": "^6.6.3",
-    "web3-core": "^1.8.2"
+    "web3-types": "^1.2.0"
   },
   "dependencies": {
     "@coin98t/wallet-adapter-base": "workspace:*"

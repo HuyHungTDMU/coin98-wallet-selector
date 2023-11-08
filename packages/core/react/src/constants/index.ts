@@ -1,9 +1,10 @@
-export const chainsUseAddress: string[] = ['cosmos', 'evm'];
+export const chainsUseAddress: string[] = ['cosmos', 'evm', 'near'];
 
 export enum BLOCKCHAINS_DATA {
   ethereum = 'evm',
   solana = 'solana',
   cosmos = 'cosmos',
+  near = 'near',
 }
 
 export enum CHAINS_ID {
@@ -201,7 +202,7 @@ export enum CHAINS_ID {
   matic = '0x89',
   fantom = '0xfa',
   xDai = '0x64',
-  tomo = '0x58',
+  viction = '0x58',
   kardia = '0x18',
   ronin = '0x7e4',
   celo = '0xA4EC',
@@ -221,12 +222,17 @@ export enum CHAINS_ID {
   zkSyncEra = '0x144',
 
   binanceSmartTest = '0x61',
+
+  //near
+  nearmainnet = 'near-mainnet',
+  neartestnet = 'near-testnet',
 }
 
 export enum WALLETS_NAME {
   coin98Ether = 'coin98_ether',
   coin98Cosmos = 'coin98_cosmos',
   coin98Solana = 'coin98_solana',
+  coin98Near = 'coin98_near',
   metamask = 'metamask_ether',
   phantom = 'phantom_solana',
   fin = 'fin_cosmos',

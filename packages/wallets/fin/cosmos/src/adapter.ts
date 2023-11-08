@@ -130,6 +130,10 @@ export class FinWalletAdapterCosmos extends BaseMessageSignerWalletAdapterCosmos
     return this._offlineSigner;
   }
 
+  get provider() {
+    return this._wallet;
+  }
+
   async autoConnect(chainId: string) {
     try {
       if (this.connected || this.connecting) return;

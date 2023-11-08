@@ -4,7 +4,7 @@ import type { EngineTypes, SessionTypes, SignClientTypes } from '@walletconnect/
 import { getSdkError, parseAccountId } from '@walletconnect/utils';
 import { ClientNotInitializedError } from './errors.js';
 import { WalletConnectModal } from '@walletconnect/modal';
-import { Transaction } from 'web3-core';
+import { Transaction } from 'web3-types';
 
 export interface WalletConnectWalletAdapterConfig {
   network: string;
@@ -152,7 +152,6 @@ export class WalletConnectWallet {
           params: [message, this.address.toString()],
         },
       });
-      console.log('🚀 ~ file: client.ts:155 ~ WalletConnectWallet ~ signMessage ~ res:', res);
 
       return res;
     } else {

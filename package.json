@@ -1,5 +1,5 @@
 {
-  "name": "@coin98t/coin98-connector",
+  "name": "coin98-connector",
   "version": "0.0.0",
   "private": true,
   "workspaces": [
@@ -11,7 +11,7 @@
     "dev": "turbo run dev --no-cache --parallel --continue",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,json,css,html}\"",
     "publish-packages": "turbo run build && changeset version && changeset publish",
     "clean": "turbo run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml",
     "setup": "pnpm install",
@@ -21,7 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
-    "@coin98t/eslint-config-custom": "workspace:*",
+    "eslint-config-custom": "workspace:*",
     "husky": "^8.0.3",
     "prettier": "latest",
     "prettier-plugin-tailwindcss": "^0.5.3",

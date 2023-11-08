@@ -1,8 +1,9 @@
 {
-  "name": "@coin98t/eslint-config-custom",
-  "version": "0.0.0",
+  "name": "eslint-config-custom",
+  "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
   "dependencies": {
     "eslint": "^7.23.0",
     "eslint-config-next": "13.0.0",

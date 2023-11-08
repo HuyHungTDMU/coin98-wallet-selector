@@ -2,18 +2,22 @@ import type { Connection, TransactionSignature } from '@solana/web3.js';
 import {
   BaseWalletAdapterCosmos,
   BaseWalletAdapterEVM,
+  BaseWalletAdapterNear,
   BaseWalletAdapterSolana,
   WalletAdapterCosmos,
   WalletAdapterCosmosProps,
   WalletAdapterEVM,
   WalletAdapterEVMProps,
+  WalletAdapterNear,
+  WalletAdapterNearProps,
   WalletAdapterSolana,
   WalletAdapterSolanaProps,
   type SendTransactionOptions,
 } from './adapter.js';
 import { WalletSendTransactionError, WalletSignTransactionError } from './errors';
 import { isVersionedTransaction, type TransactionOrVersionedTransaction } from './transaction.js';
-import { WalletReturnType } from './types';
+import { WalletReturnType, WatchAssetType } from './types/evm-solana-cosmos';
+import { SignMessageParams } from './types/near/wallet.types.js';
 
 export interface SignerWalletAdapterSolanaProps<Name extends string = string> extends WalletAdapterSolanaProps<Name> {
   signTransaction<T extends TransactionOrVersionedTransaction<this['supportedTransactionVersions']>>(
@@ -126,16 +130,12 @@ export abstract class BaseSignerWalletAdapterSolana<Name extends string = string
   }
 }
 
-export abstract class BaseSignerWalletAdapterEVM<Name extends string = string> extends BaseWalletAdapterEVM<Name> {
-  // Tạo sendTransaction bằng evm, sigTransactionV4 EVM, signAllTransactionEVM
-  // Tạm thời để trống, upgrade sau
-}
+export abstract class BaseSignerWalletAdapterEVM<Name extends string = string> extends BaseWalletAdapterEVM<Name> {}
+
+export abstract class BaseSignerWalletAdapterNear<Name extends string = string> extends BaseWalletAdapterNear<Name> {}
 export abstract class BaseSignerWalletAdapterCosmos<
   Name extends string = string,
-> extends BaseWalletAdapterCosmos<Name> {
-  // Tạo sendTransaction bằng evm, sigTransactionV4 EVM, signAllTransactionEVM
-  // Tạm thời để trống, upgrade sau
-}
+> extends BaseWalletAdapterCosmos<Name> {}
 
 export interface MessageSignerWalletAdapterSolanaProps<Name extends string = string>
   extends WalletAdapterSolanaProps<Name> {
@@ -145,9 +145,22 @@ export interface MessageSignerWalletAdapterSolanaProps<Name extends string = str
 export interface MessageSignerWalletAdapterEVMProps<Name extends string = string> extends WalletAdapterEVMProps<Name> {
   signMessage(message: string): Promise<WalletReturnType<string[], string>>;
 }
+
+export interface FullySignerWalletAdapterEVMProps<Name extends string = string> extends WalletAdapterEVMProps<Name> {
+  watchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>>;
+  ethSign(message: string): Promise<WalletReturnType<string, string>>;
+  getEncryptionPublicKey(): Promise<WalletReturnType<string, string>>;
+  ethDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>>;
+}
+
 export interface MessageSignerWalletAdapterCosmosProps<Name extends string = string>
   extends WalletAdapterCosmosProps<Name> {
   signMessage(message: string | Uint8Array): Promise<WalletReturnType<string, string>>;
+}
+
+export interface MessageSignerWalletAdapterNearProps<Name extends string = string>
+  extends WalletAdapterNearProps<Name> {
+  signMessage({ message, nonce, recipient, state }: SignMessageParams): Promise<WalletReturnType<string, string>>;
 }
 
 export type MessageSignerWalletAdapterSolana<Name extends string = string> = WalletAdapterSolana<Name> &
@@ -155,6 +168,9 @@ export type MessageSignerWalletAdapterSolana<Name extends string = string> = Wal
 
 export type MessageSignerWalletAdapterEVM<Name extends string = string> = WalletAdapterEVM<Name> &
   MessageSignerWalletAdapterEVMProps<Name>;
+
+export type FullySignerWalletAdapterEVM<Name extends string = string> = MessageSignerWalletAdapterEVM<Name> &
+  FullySignerWalletAdapterEVMProps<Name>;
 
 export type MessageSignerWalletAdapterCosmos<Name extends string = string> = WalletAdapterCosmos<Name> &
   MessageSignerWalletAdapterCosmosProps<Name>;
@@ -164,6 +180,8 @@ export abstract class BaseMessageSignerWalletAdapterSolana<Name extends string =
 {
   abstract signMessage(message: Uint8Array | string): Promise<WalletReturnType<Uint8Array, string>>;
 }
+export type MessageSignerWalletAdapterNear<Name extends string = string> = WalletAdapterNear<Name> &
+  MessageSignerWalletAdapterNearProps<Name>;
 
 export abstract class BaseMessageSignerWalletAdapterEVM<Name extends string = string>
   extends BaseSignerWalletAdapterEVM<Name>
@@ -172,9 +190,30 @@ export abstract class BaseMessageSignerWalletAdapterEVM<Name extends string = st
   abstract signMessage(message: string): Promise<WalletReturnType<string[], string>>;
 }
 
+export abstract class BaseFullySignerWalletAdapterEVM<Name extends string = string>
+  extends BaseMessageSignerWalletAdapterEVM<Name>
+  implements FullySignerWalletAdapterEVM<Name>
+{
+  abstract watchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>>;
+  abstract ethSign(message: string): Promise<WalletReturnType<string, string>>;
+  abstract getEncryptionPublicKey(): Promise<WalletReturnType<string, string>>;
+  abstract ethDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>>;
+}
 export abstract class BaseMessageSignerWalletAdapterCosmos<Name extends string = string>
   extends BaseSignerWalletAdapterCosmos<Name>
   implements MessageSignerWalletAdapterCosmos<Name>
 {
   abstract signMessage(message: string | Uint8Array): Promise<WalletReturnType<string, string>>;
+}
+
+export abstract class BaseMessageSignerWalletAdapterNear<Name extends string = string>
+  extends BaseSignerWalletAdapterNear<Name>
+  implements MessageSignerWalletAdapterNear<Name>
+{
+  abstract signMessage({
+    message,
+    nonce,
+    recipient,
+    state,
+  }: SignMessageParams): Promise<WalletReturnType<string, string>>;
 }

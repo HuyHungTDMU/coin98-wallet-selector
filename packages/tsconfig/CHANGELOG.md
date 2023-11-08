@@ -1,5 +1,35 @@
 # tsconfig
 
+## 0.0.41
+
+### Patch Changes
+
+- update function change theme and viction
+
+## 0.0.40
+
+### Patch Changes
+
+- update version
+
+## 0.0.39
+
+### Patch Changes
+
+- change for production
+
+## 0.0.38
+
+### Patch Changes
+
+- refactor for production
+
+## 0.0.37
+
+### Patch Changes
+
+- update get provider
+
 ## 0.0.36
 
 ### Patch Changes

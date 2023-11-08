@@ -1,6 +1,6 @@
 {
   "name": "@coin98t/wallet-adapter-binance-wallet",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -14,7 +14,7 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@coin98t/tsconfig": "workspace:*",
+    "tsconfig": "workspace:*",
     "tsup": "^6.6.3"
   },
   "dependencies": {

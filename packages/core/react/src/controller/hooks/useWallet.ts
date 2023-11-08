@@ -9,10 +9,14 @@ import {
   TypedMessageV3,
   TypedMessageV4,
   WalletReturnType,
+  WatchAssetType,
+  SignMessageParams,
   type AdapterEVM,
   type AdapterSolana,
   type SendTransactionOptions,
   type WalletReadyState,
+  AdapterNear,
+  Account,
 } from '@coin98t/wallet-adapter-base';
 import {
   TransactionSignature,
@@ -22,9 +26,9 @@ import {
   type VersionedTransaction,
 } from '@solana/web3.js';
 import { createContext, useContext } from 'react';
-import { Transaction } from 'web3-core';
+import { Transaction } from 'web3-types';
 export interface Wallet {
-  adapter: AdapterSolana | AdapterEVM | AdapterCosmos;
+  adapter: AdapterSolana | AdapterEVM | AdapterCosmos | AdapterNear;
   readyState: WalletReadyState;
 }
 
@@ -32,15 +36,15 @@ export interface WalletContextState {
   autoConnect: boolean;
   wallets: Wallet[];
   enables: string[];
-  chain?: string | number;
   wallet: Wallet | null;
   publicKey: PublicKey | null;
   connecting: boolean;
   connected: boolean;
-  isUninstall: boolean;
+  isNotInstalled: boolean;
   disconnecting: boolean;
   selectedChainId: string[] | string | null;
   selectedBlockChain: string | null;
+  provider: unknown;
 
   address: string | null;
   selectWallet(
@@ -71,12 +75,26 @@ export interface WalletContextState {
     (message: Uint8Array | string): Promise<WalletReturnType<Uint8Array, string>>;
     (message: string): Promise<WalletReturnType<string[], string>>;
     (message: Uint8Array | string): Promise<WalletReturnType<string, string>>;
+    (
+      message: string,
+      recipient: string,
+      nonce: Buffer,
+      callbackUrl?: string,
+      state?: string,
+    ): Promise<WalletReturnType<string, string>>;
   };
 
   signTypedData(
     msgParams: TypedMessageV3<any> | TypedMessageV4<any> | TypedMessage[],
     type: 'v1' | 'v3' | 'v4',
   ): Promise<WalletReturnType<string, string>>;
+
+  sendTransactions(transactions: any): Promise<WalletReturnType<any, string>>; // need refactor
+  ethSign(message: string): Promise<WalletReturnType<string, string>>;
+  watchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>>;
+  getEncryptionPublicKey(): Promise<WalletReturnType<string, string>>;
+  ethDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>>;
+  getAccounts(): Account | undefined;
 }
 
 const EMPTY_ARRAY: ReadonlyArray<never> = [];
@@ -86,7 +104,7 @@ const DEFAULT_CONTEXT = {
   connecting: false,
   connected: false,
   disconnecting: false,
-  isUninstall: false,
+  isNotInstalled: false,
   selectWallet(
     _walletId: string | null,
     _chainId: string | null,
@@ -129,6 +147,38 @@ const DEFAULT_CONTEXT = {
       return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'signTypedData')));
     }
   },
+
+  sendTransactions(_transactions: any) {
+    {
+      return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'sendTransactions')));
+    }
+  },
+  ethSign(_message: string) {
+    {
+      return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'ethSign')));
+    }
+  },
+  watchAsset(_params: WatchAssetType) {
+    {
+      return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'watchAsset')));
+    }
+  },
+  getEncryptionPublicKey() {
+    {
+      return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'getEncryptionPublicKey')));
+    }
+  },
+  ethDecrypt(_message: string, _address?: string) {
+    {
+      return Promise.reject(console.error(constructMissingProviderErrorMessage('get', 'ethDecrypt')));
+    }
+  },
+  getAccounts(): Account | undefined {
+    {
+      console.error(constructMissingProviderErrorMessage('get', 'getAccounts'));
+      return;
+    }
+  },
 } as WalletContextState;
 Object.defineProperty(DEFAULT_CONTEXT, 'wallets', {
   get() {
@@ -139,6 +189,12 @@ Object.defineProperty(DEFAULT_CONTEXT, 'wallets', {
 Object.defineProperty(DEFAULT_CONTEXT, 'wallet', {
   get() {
     console.error(constructMissingProviderErrorMessage('read', 'wallet'));
+    return null;
+  },
+});
+Object.defineProperty(DEFAULT_CONTEXT, 'provider', {
+  get() {
+    console.error(constructMissingProviderErrorMessage('read', 'provider'));
     return null;
   },
 });

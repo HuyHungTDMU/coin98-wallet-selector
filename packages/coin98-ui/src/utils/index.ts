@@ -5,6 +5,7 @@ export const getSelectedNetwork = (chainId: string | undefined, listChains: Chai
     return {
       blockChainName: listChains[0].blockChainName,
       chainId: listChains[0].chainId,
+      id: listChains[0].id,
     };
 
   const res = listChains.find(chain => chain.chainId === chainId);
@@ -12,5 +13,6 @@ export const getSelectedNetwork = (chainId: string | undefined, listChains: Chai
   return {
     blockChainName: res ? res.blockChainName : listChains[0].blockChainName,
     chainId: res ? res.chainId : listChains[0].chainId,
+    id: res ? res.id : listChains[0].id,
   };
 };

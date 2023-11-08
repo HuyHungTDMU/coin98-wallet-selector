@@ -1,41 +1,46 @@
 import {
-  BaseMessageSignerWalletAdapterEVM,
+  BaseFullySignerWalletAdapterEVM,
   EventEmitter,
+  scopePollingDetectionStrategy,
   TypeConnectError,
   TypedMessage,
   TypedMessageV3,
   TypedMessageV4,
-  WalletDisconnectedError,
+  WalletAccountError,
   WalletName,
   WalletNotConnectedError,
+  WalletNotReadyError,
+  WalletReadyState,
   WalletReturnType,
   WalletSendTransactionError,
   WalletSignMessageError,
-  WalletSignTransactionError,
+  WatchAssetType,
 } from '@coin98t/wallet-adapter-base';
-import {
-  scopePollingDetectionStrategy,
-  WalletAccountError,
-  WalletDisconnectionError,
-  WalletNotReadyError,
-  WalletReadyState,
-} from '@coin98t/wallet-adapter-base';
-import type { Transaction } from 'web3-core';
+import type { Transaction } from 'web3-types';
 import iconUrl from './icon';
+
 interface MetaMaskWalletEvents {
   connect(...args: unknown[]): unknown;
+
   disconnect(...args: unknown[]): unknown;
+
   accountsChanged(account: Array<string>): unknown;
+
   chainChanged(chainId: string): unknown;
 }
 
 interface MetaMaskWallet extends EventEmitter<MetaMaskWalletEvents> {
   isMetaMask?: boolean;
+
   signTransaction(transaction: any): Promise<any>;
+
   isConnected(): boolean;
+
   connect(): Promise<string[]>;
+
   disconnect(): Promise<void>;
-  request(params: { method: string; params?: string | string[] | unknown }): Promise<string[] | string>;
+
+  request(params: { method: string; params?: string | string[] | unknown }): Promise<unknown>;
 }
 
 interface MetaMaskWindow extends Window {
@@ -48,7 +53,7 @@ export interface MetaMaskWalletAdapterConfig {}
 
 export const MetaMaskWalletName = 'MetaMask' as WalletName<'MetaMask'>;
 
-export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapterEVM {
+export class MetaMaskWalletAdapterEthereum extends BaseFullySignerWalletAdapterEVM {
   id = 'metamask_ether';
   chain = 'evm';
   name = MetaMaskWalletName;
@@ -99,9 +104,9 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
     return this._readyState;
   }
 
-  // async autoConnect(chainId?: string) {
-  //   await this.connect(chainId);
-  // }
+  get provider() {
+    return this._wallet;
+  }
 
   async autoConnect() {
     try {
@@ -113,7 +118,7 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
       let address: string;
 
       try {
-        address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+        address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
       } catch (error: any) {
         throw new WalletAccountError(error?.message, error);
       }
@@ -131,7 +136,6 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
       this._chainId = currentChainIdWallet;
 
       wallet.on('accountsChanged', this._accountChanged);
-      // wallet.on('disconnect', this._disconnected);
       wallet.on('chainChanged', this._chainChanged);
 
       this.emit('connect', address);
@@ -159,7 +163,7 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
       let currentChainIdWallet: string;
 
       try {
-        address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+        address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
         await wallet.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
@@ -168,7 +172,7 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
         if (error.code === 4902) {
           try {
             await callback?.(error as Error, 'network');
-            address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+            address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
             await wallet.request({
               method: 'wallet_switchEthereumChain',
               params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
@@ -187,7 +191,6 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
         throw new WalletAccountError(error?.message, error);
       }
 
-      // wallet.on('disconnect', this._disconnected);
       wallet.on('accountsChanged', this._accountChanged);
       wallet.on('chainChanged', this._chainChanged);
 
@@ -208,20 +211,12 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
   async disconnect(): Promise<void> {
     const wallet = this._wallet;
     if (wallet) {
-      // wallet.removeListener('disconnect', this._disconnected);
       wallet.removeListener('accountsChanged', this._accountChanged);
       wallet.removeListener('chainChanged', this._chainChanged);
 
       this._chainId = null;
       this._wallet = null;
       this._address = null;
-
-      // Ethereum wallet không có func disconnect
-      // try {
-      //   await wallet.disconnect();
-      // } catch (error: any) {
-      //   this.emit('error', new WalletDisconnectionError(error?.message, error));
-      // }
     }
     this.emit('disconnect');
   }
@@ -246,49 +241,6 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
     }
   }
 
-  // async signTransaction(transaction: any): Promise<any> {
-  //   try {
-  //     const wallet = this._wallet;
-  //     if (!wallet) throw new WalletNotConnectedError();
-
-  //     try {
-  //       const response = await wallet.request({ method: 'eth_signTransaction', params: [transaction] });
-
-  //       return response;
-  //     } catch (error: any) {
-  //       throw new WalletSignTransactionError(error?.message, error);
-  //     }
-  //   } catch (error: any) {
-  //     this.emit('error', error);
-  //     throw error;
-  //   }
-  // }
-
-  // async signAllTransactions<T extends Transaction>(transactions: T[]): Promise<T[]> {
-  //   try {
-  //     const wallet = this._wallet;
-  //     if (!wallet) throw new WalletNotConnectedError();
-
-  //     try {
-  //       const response = await wallet.request({ method: 'sol_signAllTransactions', params: [transactions] });
-
-  //       const publicKey = new PublicKey(response.publicKey);
-  //       const signatures = response.signatures;
-
-  //       return transactions.map((transaction, index) => {
-  //         const signature = bs58.decode(signatures[index]!);
-  //         transaction.addSignature(publicKey, signature);
-  //         return transaction;
-  //       });
-  //     } catch (error: any) {
-  //       throw new WalletSignTransactionError(error?.message, error);
-  //     }
-  //   } catch (error: any) {
-  //     this.emit('error', error);
-  //     throw error;
-  //   }
-  // }
-
   async signMessage(message: string): Promise<WalletReturnType<string[], string>> {
     try {
       const wallet = this._wallet;
@@ -300,14 +252,11 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
 
         return { data: response, error: null, isError: false };
       } catch (error: any) {
-        console.log(error);
-
         throw new WalletSignMessageError(error?.message, error);
       }
     } catch (error: any) {
       this.emit('error', error);
       return { data: null, error: error?.error?.message, isError: true };
-      // throw error;
     }
   }
 
@@ -347,24 +296,6 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
       return { data: false, error: error?.error?.message, isError: true };
     }
   }
-
-  // Không bắt được emmit này, nó chỉ bắn khi chuyển chain bị lỗi
-
-  // private _disconnected = () => {
-  //   const wallet = this._wallet;
-  //   if (wallet) {
-  //     wallet.removeListener('disconnect', this._disconnected);
-  //     wallet.removeListener('accountsChanged', this._accountChanged);
-  //     wallet.removeListener('chainChanged', this._chainChanged);
-
-  //     this._wallet = null;
-  //     this._address = null;
-  //     this._chainId = null;
-
-  //     this.emit('error', new WalletDisconnectedError());
-  //     this.emit('disconnect');
-  //   }
-  // };
 
   async signTypedDataV4(msgParams: TypedMessageV4<any>): Promise<WalletReturnType<string, string>> {
     try {
@@ -431,11 +362,94 @@ export class MetaMaskWalletAdapterEthereum extends BaseMessageSignerWalletAdapte
       return { data: null, error: error?.error?.message, isError: true };
     }
   }
+
+  async watchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+
+      try {
+        const response = (await wallet.request({
+          method: 'wallet_watchAsset',
+          params,
+        })) as boolean;
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: 'There was an error adding the token. See console for details.', isError: true };
+    }
+  }
+
+  async ethSign(message: string): Promise<WalletReturnType<string, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = (await wallet.request({
+          method: 'eth_sign',
+          params: [from, message],
+        })) as string;
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
+  async getEncryptionPublicKey(): Promise<WalletReturnType<string, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = (await wallet.request({
+          method: 'eth_getEncryptionPublicKey',
+          params: [from],
+        })) as string;
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
+  async ethDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = await wallet.request({
+          method: 'eth_decrypt',
+          params: [message, address ?? from],
+        });
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
   private _accountChanged = (accounts: Array<string>) => {
     const address = this._address;
     if (!address) return;
 
-    // bắt ra khi chuyển wallet = null
     if (!accounts[0]) {
       this.disconnect();
     }

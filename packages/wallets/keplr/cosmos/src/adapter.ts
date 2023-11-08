@@ -1,27 +1,24 @@
 import {
   BaseMessageSignerWalletAdapterCosmos,
+  BroadcastMode,
   EventEmitter,
+  Key,
   OfflineSigner,
+  scopePollingDetectionStrategy,
   StdFee,
+  StdSignature,
   TransactionCosmos,
   TypeConnectError,
+  WalletAccountError,
   WalletConnectionError,
-  WalletDisconnectedError,
+  WalletDisconnectionError,
   WalletName,
   WalletNotConnectedError,
+  WalletNotReadyError,
+  WalletReadyState,
   WalletReturnType,
   WalletSendTransactionError,
   WalletSignMessageError,
-} from '@coin98t/wallet-adapter-base';
-import {
-  scopePollingDetectionStrategy,
-  WalletAccountError,
-  WalletDisconnectionError,
-  WalletNotReadyError,
-  WalletReadyState,
-  BroadcastMode,
-  Key,
-  StdSignature,
 } from '@coin98t/wallet-adapter-base';
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
 import { toAscii, toUtf8 } from '@cosmjs/encoding';
@@ -29,24 +26,44 @@ import { MsgExecuteContract } from 'cosmjs-types/cosmwasm/wasm/v1/tx';
 import { calculateFee } from '@cosmjs/stargate';
 import { keplrExtensionInfo } from './registry';
 import iconUrl from './icon';
+import {
+  BaseAccount,
+  ChainRestAuthApi,
+  ChainRestTendermintApi,
+  CosmosTxV1Beta1Tx,
+  createTransaction,
+  getTxRawFromTxRawOrDirectSignResponse,
+} from '@injectivelabs/sdk-ts';
+import { BigNumberInBase, DEFAULT_BLOCK_TIMEOUT_HEIGHT } from '@injectivelabs/utils';
+import { ChainId } from '@injectivelabs/ts-types';
+import { getNetworkEndpoints, Network } from '@injectivelabs/networks';
+
 interface KeplrWalletEvents {
   connect(...args: unknown[]): unknown;
+
   disconnect(...args: unknown[]): unknown;
+
   keplr_keystorechange(...args: unknown[]): unknown;
 }
 
 interface KeplrWallet extends EventEmitter<KeplrWalletEvents> {
   enable(chainIds: string | string[]): Promise<void>;
+
   disable(chainIds?: string | string[]): Promise<void>;
+
   getKey(chainId: string): Promise<Key>;
+
   signArbitrary(chainId: string, signer: string, data: string | Uint8Array): Promise<StdSignature>;
+
   verifyArbitrary(
     chainId: string,
     signer: string,
     data: string | Uint8Array,
     signature: StdSignature,
   ): Promise<boolean>;
+
   getOfflineSigner(chainId: string): OfflineSigner | null;
+
   sendTx(chainId: string, tx: Uint8Array, mode: BroadcastMode): Promise<Uint8Array>;
 }
 
@@ -119,6 +136,10 @@ export class KeplrWalletAdapterCosmos extends BaseMessageSignerWalletAdapterCosm
 
   get offlineSigner() {
     return this._offlineSigner;
+  }
+
+  get provider() {
+    return this._wallet;
   }
 
   async autoConnect(chainId: string) {
@@ -248,7 +269,6 @@ export class KeplrWalletAdapterCosmos extends BaseMessageSignerWalletAdapterCosm
         const { signature } = await wallet.signArbitrary(chainId!, from!, message);
         return { data: signature, error: null, isError: false };
       } catch (error: any) {
-        console.log(error);
         throw new WalletSignMessageError(error?.message, error);
       }
     } catch (error: any) {
@@ -257,78 +277,112 @@ export class KeplrWalletAdapterCosmos extends BaseMessageSignerWalletAdapterCosm
     }
   }
 
-  // async sendTransaction(transaction: Uint8Array): Promise<WalletReturnType<string, string>> {
-  //   try {
-  //     const wallet = this._wallet;
-  //     const chainId = this._chainId;
-  //     if (!wallet || !chainId) throw new WalletNotConnectedError();
+  getKeplr = async (): Promise<OfflineSigner | null | undefined> => {
+    const wallet = this._wallet;
+    await wallet?.enable(this._chainId || ChainId.Mainnet);
 
-  //     try {
-  //       console.log('transaction', transaction);
-  //       const res = await wallet.sendTx(chainId, transaction, 'sync' as BroadcastMode);
-  //       console.log('res', res);
-  //       const hash = Buffer.from(res).toString('hex').toUpperCase();
-  //       return { data: hash, error: null, isError: false };
-  //     } catch (error: any) {
-  //       throw new WalletSendTransactionError(error?.message, error);
-  //     }
-  //   } catch (error: any) {
-  //     console.log('error Transaction', error);
-  //     this.emit('error', error);
-  //     return { data: null, error: error?.error?.message, isError: true };
-  //   }
-  // }
+    return wallet?.getOfflineSigner(this._chainId || ChainId.Mainnet);
+  };
+
+  broadcastTx = async (txRaw: CosmosTxV1Beta1Tx.TxRaw): Promise<string> => {
+    const result = await this._wallet?.sendTx(
+      this._chainId || ChainId.Mainnet,
+      CosmosTxV1Beta1Tx.TxRaw.encode(txRaw).finish(),
+      'sync' as any,
+    );
+    if (!result || result.length === 0) {
+      throw new WalletSendTransactionError('Transaction failed to be broadcasted');
+    }
+
+    return Buffer.from(result).toString('hex');
+  };
 
   // Send Transaction CosmosJS
   async sendTransaction(transaction: TransactionCosmos): Promise<WalletReturnType<string, string>> {
     try {
-      const wallet = this._wallet;
-      const offlineSigner = this._offlineSigner;
-      let client;
-      let usedFee: StdFee | 'auto' | number;
+      if (this._chainId === ChainId.Mainnet || this._chainId === ChainId.Testnet) {
+        const chainId = this._chainId || ChainId.Mainnet;
+        const restEndpoint = getNetworkEndpoints(chainId === ChainId.Mainnet ? Network.Mainnet : Network.Testnet).rest;
 
-      if (!wallet) throw new WalletNotConnectedError();
+        /** Account Details **/
+        const chainRestAuthApi = new ChainRestAuthApi(restEndpoint);
 
-      try {
-        client = await SigningCosmWasmClient.connectWithSigner(transaction.rpcUrl, offlineSigner as any);
-      } catch (error: any) {
-        console.log(error);
-        throw new WalletSendTransactionError(error?.message, error);
-      }
+        const accountDetailsResponse = await chainRestAuthApi.fetchAccount(this._address || '');
+        const baseAccount = BaseAccount.fromRestApi(accountDetailsResponse);
+        const accountDetails = baseAccount.toAccountDetails();
 
-      if (!transaction.fee) {
-        const signAndBroadcastMessages = transaction.instructions.map(i => ({
-          typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
-          value: MsgExecuteContract.fromPartial({
-            sender: this._address!,
-            contract: i.contractAddress,
-            msg: toUtf8(JSON.stringify(i.msg)),
-            funds: [...(i.funds || [])],
-          }),
-        }));
+        /** Block Details */
+        const chainRestTendermintApi = new ChainRestTendermintApi(restEndpoint);
+        const latestBlock = await chainRestTendermintApi.fetchLatestBlock();
+        const latestHeight = latestBlock.header.height;
+        const timeoutHeight = new BigNumberInBase(latestHeight).plus(DEFAULT_BLOCK_TIMEOUT_HEIGHT);
 
-        const gasEstimation = await client.simulate(this._address!, signAndBroadcastMessages, transaction.memo);
-        const multiplier = 1.3;
-        usedFee = calculateFee(Math.round(gasEstimation * multiplier), '0.0025' + transaction.denom);
+        const offlineSigner = (await this.getKeplr()) as any;
+
+        /** Prepare the Transaction **/
+        const { signDoc } = createTransaction({
+          pubKey: accountDetails.pubKey.key,
+          chainId,
+          fee: transaction.fee as any,
+          message: transaction.instructions[0].msg,
+          sequence: baseAccount.sequence,
+          timeoutHeight: timeoutHeight.toNumber(),
+          accountNumber: baseAccount.accountNumber,
+        });
+
+        const directSignResponse = await offlineSigner?.signDirect(this._address, signDoc);
+        const txRaw = getTxRawFromTxRawOrDirectSignResponse(directSignResponse);
+        const txHash = await this.broadcastTx(txRaw);
+
+        return { data: txHash, error: '', isError: false };
       } else {
-        usedFee = transaction.fee;
-      }
+        const wallet = this._wallet;
+        const offlineSigner = this._offlineSigner;
+        let client;
+        let usedFee: StdFee | 'auto' | number;
 
-      try {
-        const result = await client.executeMultiple(
-          this._address!,
-          transaction.instructions,
-          usedFee,
-          transaction.memo || '',
-        );
+        if (!wallet) throw new WalletNotConnectedError();
 
-        return { data: result as any, error: null, isError: false };
-      } catch (error: any) {
-        throw new WalletSendTransactionError(error?.message, error);
+        try {
+          client = await SigningCosmWasmClient.connectWithSigner(transaction.rpcUrl, offlineSigner as any);
+        } catch (error: any) {
+          throw new WalletSendTransactionError(error?.message, error);
+        }
+
+        if (!transaction.fee) {
+          const signAndBroadcastMessages = transaction.instructions.map(i => ({
+            typeUrl: '/cosmwasm.wasm.v1.MsgExecuteContract',
+            value: MsgExecuteContract.fromPartial({
+              sender: this._address!,
+              contract: i.contractAddress,
+              msg: toUtf8(JSON.stringify(i.msg)),
+              funds: [...(i.funds || [])],
+            }),
+          }));
+
+          const gasEstimation = await client.simulate(this._address!, signAndBroadcastMessages, transaction.memo);
+          const multiplier = 1.3;
+          usedFee = calculateFee(Math.round(gasEstimation * multiplier), '0.0025' + transaction.denom);
+        } else {
+          usedFee = transaction.fee;
+        }
+
+        try {
+          const result = await client.executeMultiple(
+            this._address!,
+            transaction.instructions,
+            usedFee,
+            transaction.memo || '',
+          );
+
+          return { data: result as any, error: null, isError: false };
+        } catch (error: any) {
+          throw new WalletSendTransactionError(error?.message, error);
+        }
       }
     } catch (error: any) {
       this.emit('error', error);
-      return { data: null, error: error?.message, isError: true };
+      return { data: null, error: error?.error?.message, isError: true };
     }
   }
 

@@ -3,7 +3,7 @@ import {
   WalletConnectWalletAdapterConfig as BaseWalletConnectWalletAdapterConfig,
 } from './client';
 
-import type { Transaction } from 'web3-core';
+import { Transaction } from 'web3-types';
 
 import {
   BaseMessageSignerWalletAdapterEVM,
@@ -68,6 +68,11 @@ export class WalletConnectWalletAdapterEVM extends BaseMessageSignerWalletAdapte
   get readyState() {
     return this._readyState;
   }
+
+  get provider() {
+    return this._wallet;
+  }
+
   async connect(chainId?: string): Promise<void> {
     const network = getNetworkFromChainId(chainId);
     try {

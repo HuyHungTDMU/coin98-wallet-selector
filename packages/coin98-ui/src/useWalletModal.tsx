@@ -4,14 +4,18 @@ export interface WalletModalContextState {
   visible: boolean;
   setVisible: (open: boolean) => void;
   openWalletModal: () => void;
+  switchTheme: (theme: 'dark' | 'light') => void;
 }
 
 const DEFAULT_CONTEXT = {
   setVisible(_open: boolean) {
     console.error(constructMissingProviderErrorMessage('call', 'setVisible'));
   },
-  openWalletModal(_open: boolean) {
+  openWalletModal() {
     console.error(constructMissingProviderErrorMessage('call', 'openWalletModal'));
+  },
+  switchTheme(_theme: 'dark' | 'light') {
+    console.error(constructMissingProviderErrorMessage('call', 'switchTheme'));
   },
   visible: false,
 };

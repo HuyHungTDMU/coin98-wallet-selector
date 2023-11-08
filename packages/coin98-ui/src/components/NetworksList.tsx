@@ -13,8 +13,8 @@ const NetWorksList = ({
 }: {
   listNetworks: ChainInfo[];
   titleNetworks: string | ReactNode;
-  selectedNetwork: { blockChainName: string; chainId: string } | undefined;
-  handleSelectedChain: (blockChainName: string, chainId: string) => void;
+  selectedNetwork: { blockChainName: string; chainId: string; id: number | string } | undefined;
+  handleSelectedChain: (blockChainName: string, chainId: string, id: number | string) => void;
   renderListChains?: (chainData: ChainInfo, isActive: boolean) => ReactNode;
 }) => {
   const { enables, requestInstall } = useWallet();
@@ -61,7 +61,7 @@ const NetWorksList = ({
   }, [visible]);
 
   return (
-    <div className="c98-w-[200px]">
+    <div className="c98-w-[200px] lg:c98-block c98-hidden">
       <h3 className="c98-text-subTitle c98-text-[16px] c98-font-medium">1. {titleNetworks}</h3>
       <div className="c98-overflow-y-auto c98-mt-[12px] c98-bg-bkg-secondary c98-rounded-[16px] c98-p-[16px] c98-h-[334px]">
         <div
@@ -96,14 +96,14 @@ const NetWorksList = ({
             data.map(item => {
               const isEnabledBlockChain = enables.includes(item.blockChainName);
               if (!isEnabledBlockChain) return;
-              const isActive = selectedNetwork?.chainId === item.chainId;
+              const isActive = selectedNetwork?.id === item.id;
               return (
                 <div
-                  key={item.chainId}
+                  key={`${item.chainId}-${item.id}`}
                   className="c98-cursor-pointer"
                   onClick={e => {
                     e.preventDefault();
-                    handleSelectedChain(item.blockChainName, item.chainId);
+                    handleSelectedChain(item.blockChainName, item.chainId, item.id);
                     requestInstall(false);
                   }}
                 >

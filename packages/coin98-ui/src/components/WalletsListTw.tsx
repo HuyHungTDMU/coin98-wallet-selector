@@ -57,7 +57,7 @@ const ListWaleltContent = ({
   handleClose: (event?: MouseEvent) => void;
   renderListWallets?: (walletIcon: string, walletName: string) => ReactNode;
 }) => {
-  const { selectWallet, connecting, connected, isUninstall } = useWallet();
+  const { selectWallet, connecting, connected, isNotInstalled } = useWallet();
   const [walletActive, selectWalletActive] = useState<Adapter>();
 
   const PROVIDERS: { [key: string]: any } = {
@@ -122,7 +122,7 @@ const ListWaleltContent = ({
 
   return (
     <div>
-      {!isUninstall && (
+      {!isNotInstalled && (
         <div className="c98-py-12 c98-px-5 c98-grid c98-grid-cols-4 c98-gap-x-6 c98-gap-y-10">
           {listedWallets.map((wallet, idx) => {
             if (wallet.adapter.chain === selectedNetwork?.blockChainName) {
@@ -156,7 +156,7 @@ const ListWaleltContent = ({
         </div>
       )}
       <div className="c98-col-span-4 c98-p-6">
-        {isUninstall && (
+        {isNotInstalled && (
           <InstallWalletDisplay
             icon={walletActive?.icon as string}
             url={walletActive?.url as string}

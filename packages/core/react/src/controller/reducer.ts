@@ -42,6 +42,7 @@ export interface AdapterAcionState {
   address: string | null;
   publicKey: PublicKey | null;
   selectedBlockChain: string | null;
+  provider: unknown;
 }
 
 export function reducer(state: AdapterAcionState, action: AdapterActionType) {
@@ -59,6 +60,7 @@ export function reducer(state: AdapterAcionState, action: AdapterActionType) {
         disconnecting: false,
         [isUseAddress ? 'address' : 'publicKey']: isUseAddress ? (data as string) : (data as PublicKey),
         selectedBlockChain: adapter.chain,
+        provider: adapter.provider,
       };
 
     case AdapterActionKind.DISCONNECT:
@@ -69,6 +71,7 @@ export function reducer(state: AdapterAcionState, action: AdapterActionType) {
         disconnecting: false,
         address: null,
         publicKey: null,
+        provider: null,
         selectedBlockChain: null,
       };
     case AdapterActionKind.CONNECTING:

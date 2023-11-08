@@ -20,7 +20,7 @@ export const SUPPORTED_CHAINS: { [key: string]: any } = {
   '0xa4b1': 'eip155:42161', // Arbitrum
   '0x89': 'eip155:137', // Polygon
   '0x38': 'eip155:56', //Binance Smart Chain
-  '0x58': 'eip155:88', // Tomo Chain
+  '0x58': 'eip155:88', // Viction Chain
   '0x61': 'eip155:97', // Binance Smart Chain Test
   solana: 'solana:4sGjMW1sUnHzSxGspuhpqLDx6wiyjNtZ',
   'solana-dev': 'solana:8E9rvCKLFQia2Y35HXjjpWzj8weVo44K',

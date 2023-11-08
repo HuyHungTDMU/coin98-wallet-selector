@@ -134,15 +134,15 @@ export const gnosis: ChainInfoEVM = {
   rpcUrls: ['https://rpc.xdaichain.com'],
 };
 
-export const tomo: ChainInfoEVM = {
+export const viction: ChainInfoEVM = {
   id: 11,
   blockChainName: 'evm',
-  name: 'TomoChain',
+  name: 'Viction',
   chainId: '0x58',
   imgUrl:
-    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiPgo8dGl0bGU+YXBwX3RvbW9jaGFpbjwvdGl0bGU+CjxwYXRoIGQ9Ik01LjY2OCAxLjMzM3Y0LjY2NGwtMi4zMzUgMi4zMzV2LTQuNjY0bDIuMzM1LTIuMzM1eiI+PC9wYXRoPgo8cGF0aCBkPSJNMTIuNjY3IDEwLjY2N2MwIDEuMjM4LTAuNDkyIDIuNDI1LTEuMzY3IDMuM3MtMi4wNjIgMS4zNjctMy4zIDEuMzY3LTIuNDI1LTAuNDkyLTMuMy0xLjM2N2MtMC44NzUtMC44NzUtMS4zNjctMi4wNjItMS4zNjctMy4zdi0yLjMzNWgyLjMzNXYyLjMzNWMtMC4wMDIgMC4zMDggMC4wNTcgMC42MTMgMC4xNzMgMC44OThzMC4yODggMC41NDQgMC41MDUgMC43NjNjMC4yMTcgMC4yMTggMC40NzUgMC4zOTIgMC43NTkgMC41MXMwLjU4OSAwLjE3OSAwLjg5NyAwLjE3OSAwLjYxMy0wLjA2MSAwLjg5Ny0wLjE3OWMwLjI4NC0wLjExOCAwLjU0Mi0wLjI5MiAwLjc1OS0wLjUxczAuMzg5LTAuNDc4IDAuNTA1LTAuNzYzYzAuMTE2LTAuMjg1IDAuMTc1LTAuNTkgMC4xNzMtMC44OThoMi4zM3oiPjwvcGF0aD4KPHBhdGggZD0iTTEyLjY2NyA1Ljk5OGwtMi4zMzUgMi4zMzVoLTYuOTk5bDIuMzM1LTIuMzM1aDYuOTk5eiI+PC9wYXRoPgo8L3N2Zz4K',
-  chainName: 'TomoChain',
-  nativeCurrency: { name: 'TomoChain', symbol: 'TOMO', decimals: 18 },
+    'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NTkuODQgNTY1Ljk0Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjMjMxZjIwOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Im00NzguNzksODMuMTd2MTU3LjVjLTYwLjg5LDI2LjYxLTEyOC4xNSw0MS4zNi0xOTguODcsNDEuMzZzLTEzNy45OC0xNC43Ni0xOTguODctNDEuMzZWODMuMTdoLjAyYzYwLjg5LDI2LjYxLDEyOC4xNSw0MS4zNiwxOTguODUsNDEuMzZzMTM3Ljk2LTE0Ljc2LDE5OC44NS00MS4zNmguMDJaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtNDc4Ljc5LDQ4NC44OXYtMTU3LjVjLTYwLjg5LTI2LjYxLTEyOC4xNS00MS4zNi0xOTguODctNDEuMzZzLTEzNy45OCwxNC43Ni0xOTguODcsNDEuMzZ2MTU3LjVoLjAyYzYwLjg5LTI2LjYxLDEyOC4xNS00MS4zNiwxOTguODUtNDEuMzZzMTM3Ljk2LDE0Ljc2LDE5OC44NSw0MS4zNmguMDJaIi8+Cjwvc3ZnPg==',
+  chainName: 'Viction',
+  nativeCurrency: { name: 'Viction', symbol: 'VIC', decimals: 18 },
   rpcUrls: ['https://rpc.tomochain.com'],
 };
 
@@ -672,9 +672,102 @@ export const seiTestnet: ChainInfoCosmos = {
   features: ['stargate', 'ibc-transfer'],
 };
 
+export const nearMainnet: ChainInfoBase = {
+  id: 34,
+  blockChainName: 'near',
+  name: 'Near Mainnet',
+  chainId: 'near-mainnet',
+  imgUrl:
+    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik03NDQuNzM0IDE2NS42NzdsLTE2MS4xNjEgMjM5LjJjLTIuMzE3IDMuNDc0LTMuMjkgNy42NzUtMi43MzEgMTEuODE0czIuNjA3IDcuOTMyIDUuNzY0IDEwLjY2NmMzLjE1NyAyLjczNSA3LjIwMiA0LjIyNCAxMS4zNzkgNC4xOXM4LjE5Ni0xLjU5NiAxMS4zMDctNC4zODJsMTU4LjU5Mi0xMzguMDQ4YzAuOTI2LTAuODIxIDIuMDc0LTEuMzQ2IDMuMzAyLTEuNTA3IDEuMjI1LTAuMTYxIDIuNDcgMC4wNDggMy41NzUgMC42MDIgMS4xMDkgMC41NTQgMi4wMjIgMS40MjUgMi42MjggMi41MDRzMC44NzUgMi4zMTMgMC43NzIgMy41NDZ2NDMxLjJjMCAxLjI5My0wLjM5MyAyLjU1MS0xLjEyNiAzLjYxOC0wLjczIDEuMDY3LTEuNzY2IDEuODgyLTIuOTc0IDIuMzQ3cy0yLjUyNiAwLjU1NS0zLjc4IDAuMjUyYy0xLjI1OS0wLjI5OS0yLjM5NC0wLjk3My0zLjI2NC0xLjkyOWwtNDgwLjA0Ni01NzQuMzZjLTcuNTU5LTkuMjYxLTE3LjExNC0xNi42OTMtMjcuOTUtMjEuNzQycy0yMi42NzMtNy41ODEtMzQuNjI2LTcuNDFoLTE3LjE0NGMtMjEuNjkgMC4xODYtNDIuNDI2IDguOTQzLTU3LjY4NCAyNC4zNjFzLTIzLjc5NyAzNi4yNDQtMjMuNzU2IDU3LjkzNXY2MDYuOTI5YzAuMDA4IDE3Ljk0NiA1Ljg3OSAzNS4zOTYgMTYuNzIyIDQ5LjY5OHMyNi4wNjEgMjQuNjY2IDQzLjMzOSAyOS41MjFjMTcuMjc3IDQuODUxIDM1LjY2OCAzLjkyNSA1Mi4zNzEtMi42NDEgMTYuNzAzLTYuNTYyIDMwLjgwMi0xOC40MDYgNDAuMTUzLTMzLjcyNGwxNjEuMTYtMjM5LjE5OGMyLjMzLTMuNDczIDMuMzExLTcuNjggMi43NTYtMTEuODIzcy0yLjYwNy03Ljk0NS01Ljc2NC0xMC42ODRjLTMuMTYyLTIuNzM5LTcuMjExLTQuMjI4LTExLjM5My00LjE5LTQuMTgxIDAuMDQzLTguMjA0IDEuNjA5LTExLjMxMSA0LjQwN2wtMTU4LjU5MiAxMzcuMTljLTAuOTI2IDAuODE5LTIuMDc2IDEuMzQ0LTMuMzAyIDEuNTA2LTEuMjI2IDAuMTU4LTIuNDcyLTAuMDUxLTMuNTc4LTAuNjAyLTEuMTA2LTAuNTU1LTIuMDIyLTEuNDI1LTIuNjI5LTIuNTA1LTAuNjA3LTEuMDc1LTAuODc4LTIuMzA4LTAuNzc4LTMuNTQxdi00MzAuMzNjMC4wMDItMS4yOTIgMC4zOTQtMi41NTQgMS4xMjYtMy42MTlzMS43NjktMS44ODMgMi45NzUtMi4zNDdjMS4yMDYtMC40NjQgMi41MjQtMC41NTIgMy43ODEtMC4yNTNzMi4zOTQgMC45NzIgMy4yNjEgMS45M2w0ODAuMDU4IDU3NC4zNDJjNy42MTYgOS4xOTUgMTcuMTgyIDE2LjU4IDI4LjAwNiAyMS42MTkgMTAuODIgNS4wNDMgMjIuNjMgNy42MTYgMzQuNTY5IDcuNTM1aDE3LjE0M2MyMS44MjQtMC4wMDkgNDIuNzUyLTguNjc4IDU4LjE4NS0yNC4xMTFzMjQuMTA3LTM2LjM2MSAyNC4xMTEtNTguMTg1di02MDYuOTI5Yy0wLjEyNC0xNy45OTQtNi4xMDYtMzUuNDU4LTE3LjAzMy00OS43NTRzLTI2LjIxNC0yNC42NDYtNDMuNTQ2LTI5LjQ4NmMtMTcuMzMxLTQuODQtMzUuNzY3LTMuOTA4LTUyLjUyMyAyLjY1Ni0xNi43NTEgNi41NjQtMzAuOTE2IDE4LjQwMy00MC4zNDYgMzMuNzI4eiI+PC9wYXRoPgo8L3N2Zz4K',
+};
+
+export const nearTestnet: ChainInfoBase = {
+  id: 35,
+  blockChainName: 'near',
+  name: 'Near Testnet',
+  chainId: 'near-testnet',
+  imgUrl:
+    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik03NDQuNzM0IDE2NS42NzdsLTE2MS4xNjEgMjM5LjJjLTIuMzE3IDMuNDc0LTMuMjkgNy42NzUtMi43MzEgMTEuODE0czIuNjA3IDcuOTMyIDUuNzY0IDEwLjY2NmMzLjE1NyAyLjczNSA3LjIwMiA0LjIyNCAxMS4zNzkgNC4xOXM4LjE5Ni0xLjU5NiAxMS4zMDctNC4zODJsMTU4LjU5Mi0xMzguMDQ4YzAuOTI2LTAuODIxIDIuMDc0LTEuMzQ2IDMuMzAyLTEuNTA3IDEuMjI1LTAuMTYxIDIuNDcgMC4wNDggMy41NzUgMC42MDIgMS4xMDkgMC41NTQgMi4wMjIgMS40MjUgMi42MjggMi41MDRzMC44NzUgMi4zMTMgMC43NzIgMy41NDZ2NDMxLjJjMCAxLjI5My0wLjM5MyAyLjU1MS0xLjEyNiAzLjYxOC0wLjczIDEuMDY3LTEuNzY2IDEuODgyLTIuOTc0IDIuMzQ3cy0yLjUyNiAwLjU1NS0zLjc4IDAuMjUyYy0xLjI1OS0wLjI5OS0yLjM5NC0wLjk3My0zLjI2NC0xLjkyOWwtNDgwLjA0Ni01NzQuMzZjLTcuNTU5LTkuMjYxLTE3LjExNC0xNi42OTMtMjcuOTUtMjEuNzQycy0yMi42NzMtNy41ODEtMzQuNjI2LTcuNDFoLTE3LjE0NGMtMjEuNjkgMC4xODYtNDIuNDI2IDguOTQzLTU3LjY4NCAyNC4zNjFzLTIzLjc5NyAzNi4yNDQtMjMuNzU2IDU3LjkzNXY2MDYuOTI5YzAuMDA4IDE3Ljk0NiA1Ljg3OSAzNS4zOTYgMTYuNzIyIDQ5LjY5OHMyNi4wNjEgMjQuNjY2IDQzLjMzOSAyOS41MjFjMTcuMjc3IDQuODUxIDM1LjY2OCAzLjkyNSA1Mi4zNzEtMi42NDEgMTYuNzAzLTYuNTYyIDMwLjgwMi0xOC40MDYgNDAuMTUzLTMzLjcyNGwxNjEuMTYtMjM5LjE5OGMyLjMzLTMuNDczIDMuMzExLTcuNjggMi43NTYtMTEuODIzcy0yLjYwNy03Ljk0NS01Ljc2NC0xMC42ODRjLTMuMTYyLTIuNzM5LTcuMjExLTQuMjI4LTExLjM5My00LjE5LTQuMTgxIDAuMDQzLTguMjA0IDEuNjA5LTExLjMxMSA0LjQwN2wtMTU4LjU5MiAxMzcuMTljLTAuOTI2IDAuODE5LTIuMDc2IDEuMzQ0LTMuMzAyIDEuNTA2LTEuMjI2IDAuMTU4LTIuNDcyLTAuMDUxLTMuNTc4LTAuNjAyLTEuMTA2LTAuNTU1LTIuMDIyLTEuNDI1LTIuNjI5LTIuNTA1LTAuNjA3LTEuMDc1LTAuODc4LTIuMzA4LTAuNzc4LTMuNTQxdi00MzAuMzNjMC4wMDItMS4yOTIgMC4zOTQtMi41NTQgMS4xMjYtMy42MTlzMS43NjktMS44ODMgMi45NzUtMi4zNDdjMS4yMDYtMC40NjQgMi41MjQtMC41NTIgMy43ODEtMC4yNTNzMi4zOTQgMC45NzIgMy4yNjEgMS45M2w0ODAuMDU4IDU3NC4zNDJjNy42MTYgOS4xOTUgMTcuMTgyIDE2LjU4IDI4LjAwNiAyMS42MTkgMTAuODIgNS4wNDMgMjIuNjMgNy42MTYgMzQuNTY5IDcuNTM1aDE3LjE0M2MyMS44MjQtMC4wMDkgNDIuNzUyLTguNjc4IDU4LjE4NS0yNC4xMTFzMjQuMTA3LTM2LjM2MSAyNC4xMTEtNTguMTg1di02MDYuOTI5Yy0wLjEyNC0xNy45OTQtNi4xMDYtMzUuNDU4LTE3LjAzMy00OS43NTRzLTI2LjIxNC0yNC42NDYtNDMuNTQ2LTI5LjQ4NmMtMTcuMzMxLTQuODQtMzUuNzY3LTMuOTA4LTUyLjUyMyAyLjY1Ni0xNi43NTEgNi41NjQtMzAuOTE2IDE4LjQwMy00MC4zNDYgMzMuNzI4eiI+PC9wYXRoPgo8L3N2Zz4K',
+};
+
+export const base: ChainInfoEVM = {
+  id: 36,
+  blockChainName: 'evm',
+  name: 'Base',
+  chainId: '0x2105',
+  imgUrl:
+    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik01MTEuMTA3IDEwMjRjMjgzLjI2NCAwIDUxMi44OTMtMjI5LjIyOSA1MTIuODkzLTUxMnMtMjI5LjYyOS01MTItNTEyLjg5My01MTJjLTI2OC43NDQgMC00ODkuMjExIDIwNi4zMzItNTExLjEwNyA0NjguOTYzaDY3Ny45MjZ2ODYuMDc0aC02NzcuOTI2YzIxLjg5NiAyNjIuNjMgMjQyLjM2NCA0NjguOTYzIDUxMS4xMDcgNDY4Ljk2M3oiPjwvcGF0aD4KPC9zdmc+Cg==',
+  chainName: 'Base',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: ['https://mainnet.base.org'],
+};
+
+export const baseTestnet: ChainInfoEVM = {
+  id: 37,
+  blockChainName: 'evm',
+  name: 'Base Testnet',
+  chainId: '0x14A33',
+  imgUrl:
+    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik01MTEuMTA3IDEwMjRjMjgzLjI2NCAwIDUxMi44OTMtMjI5LjIyOSA1MTIuODkzLTUxMnMtMjI5LjYyOS01MTItNTEyLjg5My01MTJjLTI2OC43NDQgMC00ODkuMjExIDIwNi4zMzItNTExLjEwNyA0NjguOTYzaDY3Ny45MjZ2ODYuMDc0aC02NzcuOTI2YzIxLjg5NiAyNjIuNjMgMjQyLjM2NCA0NjguOTYzIDUxMS4xMDcgNDY4Ljk2M3oiPjwvcGF0aD4KPC9zdmc+Cg==',
+  chainName: 'Base Testnet',
+  nativeCurrency: {
+    name: 'ETH',
+    symbol: 'ETH',
+    decimals: 18,
+  },
+  rpcUrls: ['https://goerli.base.org'],
+};
+
+export const injectiveMainnet: ChainInfoBase = {
+  id: 38,
+  blockChainName: 'cosmos',
+  name: 'Injective Mainnet',
+  chainId: 'injective-1',
+  imgUrl:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuNDI1MDIgNS41MzE5OUM0LjU0OTUyIDUuMzcyMjQgNC42ODA3NyA1LjIxOTI0IDQuODEyNzcgNS4wNjQ3NEM0LjgxODc3IDUuMDU3MjQgNC44MzIyNyA1LjA1NTc0IDQuODM4MjcgNS4wNDgyNEM0Ljg1MDI3IDUuMDMzMjQgNC44Njk3NyA1LjAyMzQ5IDQuODgxNzcgNS4wMDg0OUw0Ljg5Mzc3IDQuOTkzNDlDNC45ODUyNyA0LjkwNjQ5IDUuMDgyNzcgNC44MTE5OSA1LjE5NjAyIDQuNzI5NDlDNS41NzE3NyA0LjQzMDk5IDUuOTkyNTIgNC4xOTQ3NCA2LjQ0MzI3IDQuMDMwNDlDNy44NDEyNSAzLjUyOTQ5IDkuMzk2NzUgMy44Mzg0OSAxMC42MTcgNS4wMTY3NEMxMi4zMjAyIDYuNjQ4NzQgMTIuMTY3MiA5LjI3OTc1IDEwLjgwODIgMTEuMDI4QzkuMDg5MjUgMTMuNjMzNSA2LjEzNTc3IDE3LjI3MDIgMTAuMjI1NSAyMC41Mjc1QzEwLjk2MTIgMjEuMTEzMiAxMS41MDU3IDIxLjU5NjIgMTMuODIxNyAyMi4yODAyQzEyLjMwNzUgMjIuNTY2IDEwLjkwMjcgMjIuNDc3NSA5LjMzOTc1IDIyLjA2ODdDOC4yMzQyNSAyMS40Mjk3IDYuNDk1MDIgMjAuMDY0IDUuOTA0MDIgMTguMjE4MkM1LjAwOTI3IDE1LjQyIDcuNDc3NTIgMTEuMjM2NSA4LjY3IDkuNjI1NUMxMC4zMDczIDcuMzk0MjQgNy42NTgyNSA0Ljk4MTQ5IDUuNzA3NTIgNy42NzYyNUM0LjY4NzUyIDkuMDgwMjUgMi45MDQwMiAxMy4wNTUyIDMuNTIzNTIgMTYuMDAyN0MzLjg4NTc3IDE3LjY3NDUgNC4zNjg3NyAxOC44OTMyIDYuMjg0MjcgMjAuNTY3MkM1LjkyMjc3IDIwLjM0ODIgNS41NzcwMiAyMC4xMDQ1IDUuMjUwMDIgMTkuODM3NUMwLjc5ODc3MiAxNS41OTg1IDEuMzE1NTIgOS4wNDQyNSA0LjQyNTc3IDUuNTMwNDlMNC40MjUwMiA1LjUzMTk5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+CjxwYXRoIGQ9Ik0xOS41NzU4IDE4LjkxNTdDMTkuNDUxMyAxOS4wNzU1IDE5LjMyIDE5LjIyODUgMTkuMTg4IDE5LjM4M0MxOS4xODIgMTkuMzkwNSAxOS4xNjg1IDE5LjM5MiAxOS4xNjI1IDE5LjM5OTVDMTkuMTUwNSAxOS40MTQ1IDE5LjEzMSAxOS40MjQyIDE5LjExOTggMTkuNDM5MkwxOS4xMDc4IDE5LjQ1NDJDMTkuMDE2MyAxOS41NDEyIDE4LjkxODggMTkuNjM1NyAxOC44MDU1IDE5LjcxODJDMTguNDI5OCAyMC4wMTY3IDE4LjAwOSAyMC4yNTMgMTcuNTU4MyAyMC40MTcyQzE2LjE2MDMgMjAuOTE4MiAxNC42MDQ4IDIwLjYwOTIgMTMuMzg0NSAxOS40MzFDMTEuNjgxMyAxNy43OTkgMTEuODM0MyAxNS4xNjggMTMuMTkzMyAxMy40MTk3QzE0LjkxMTUgMTAuODE0MiAxNy44NjU4IDcuMTc3NSAxMy43NzYgMy45MjAyNUMxMy4wNDAzIDMuMzM0NSAxMi40OTU4IDIuODUxNSAxMC4xNzkgMi4xNjc1QzExLjY5NCAxLjg4MTc1IDEzLjA5ODggMS45NzAyNSAxNC42NjE4IDIuMzc5QzE1Ljc2NzMgMy4wMTggMTcuNTA2NSA0LjM4Mzc1IDE4LjA5NzUgNi4yMjk1QzE4Ljk5MjMgOS4wMjc3NCAxNi41MjQgMTMuMjExMiAxNS4zMzE1IDE0LjgyMjJDMTMuNjk0MyAxNy4wNTM1IDE2LjM0MzMgMTkuNDY2MiAxOC4yOTQgMTYuNzcxNUMxOS4zMTQgMTUuMzY3NSAyMS4wOTc1IDExLjM5MjUgMjAuNDc4IDguNDQ0OTlDMjAuMTE1IDYuNzczMjUgMTkuNjMyOCA1LjU1NDUgMTcuNzE3MyAzLjg4MDVDMTguMDcyIDQuMDk1IDE4LjQxNyA0LjMzOCAxOC43NTE1IDQuNjEwMjVDMjMuMjAyIDguODQ5MjQgMjIuNjg2IDE1LjQwMzUgMTkuNTc1OCAxOC45MTcyVjE4LjkxNTdaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9zdmc+Cg==',
+};
+
+export const injectiveTestnet: ChainInfoBase = {
+  id: 39,
+  blockChainName: 'cosmos',
+  name: 'Injective Testnet',
+  chainId: 'injective-888',
+  imgUrl:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuNDI1MDIgNS41MzE5OUM0LjU0OTUyIDUuMzcyMjQgNC42ODA3NyA1LjIxOTI0IDQuODEyNzcgNS4wNjQ3NEM0LjgxODc3IDUuMDU3MjQgNC44MzIyNyA1LjA1NTc0IDQuODM4MjcgNS4wNDgyNEM0Ljg1MDI3IDUuMDMzMjQgNC44Njk3NyA1LjAyMzQ5IDQuODgxNzcgNS4wMDg0OUw0Ljg5Mzc3IDQuOTkzNDlDNC45ODUyNyA0LjkwNjQ5IDUuMDgyNzcgNC44MTE5OSA1LjE5NjAyIDQuNzI5NDlDNS41NzE3NyA0LjQzMDk5IDUuOTkyNTIgNC4xOTQ3NCA2LjQ0MzI3IDQuMDMwNDlDNy44NDEyNSAzLjUyOTQ5IDkuMzk2NzUgMy44Mzg0OSAxMC42MTcgNS4wMTY3NEMxMi4zMjAyIDYuNjQ4NzQgMTIuMTY3MiA5LjI3OTc1IDEwLjgwODIgMTEuMDI4QzkuMDg5MjUgMTMuNjMzNSA2LjEzNTc3IDE3LjI3MDIgMTAuMjI1NSAyMC41Mjc1QzEwLjk2MTIgMjEuMTEzMiAxMS41MDU3IDIxLjU5NjIgMTMuODIxNyAyMi4yODAyQzEyLjMwNzUgMjIuNTY2IDEwLjkwMjcgMjIuNDc3NSA5LjMzOTc1IDIyLjA2ODdDOC4yMzQyNSAyMS40Mjk3IDYuNDk1MDIgMjAuMDY0IDUuOTA0MDIgMTguMjE4MkM1LjAwOTI3IDE1LjQyIDcuNDc3NTIgMTEuMjM2NSA4LjY3IDkuNjI1NUMxMC4zMDczIDcuMzk0MjQgNy42NTgyNSA0Ljk4MTQ5IDUuNzA3NTIgNy42NzYyNUM0LjY4NzUyIDkuMDgwMjUgMi45MDQwMiAxMy4wNTUyIDMuNTIzNTIgMTYuMDAyN0MzLjg4NTc3IDE3LjY3NDUgNC4zNjg3NyAxOC44OTMyIDYuMjg0MjcgMjAuNTY3MkM1LjkyMjc3IDIwLjM0ODIgNS41NzcwMiAyMC4xMDQ1IDUuMjUwMDIgMTkuODM3NUMwLjc5ODc3MiAxNS41OTg1IDEuMzE1NTIgOS4wNDQyNSA0LjQyNTc3IDUuNTMwNDlMNC40MjUwMiA1LjUzMTk5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+CjxwYXRoIGQ9Ik0xOS41NzU4IDE4LjkxNTdDMTkuNDUxMyAxOS4wNzU1IDE5LjMyIDE5LjIyODUgMTkuMTg4IDE5LjM4M0MxOS4xODIgMTkuMzkwNSAxOS4xNjg1IDE5LjM5MiAxOS4xNjI1IDE5LjM5OTVDMTkuMTUwNSAxOS40MTQ1IDE5LjEzMSAxOS40MjQyIDE5LjExOTggMTkuNDM5MkwxOS4xMDc4IDE5LjQ1NDJDMTkuMDE2MyAxOS41NDEyIDE4LjkxODggMTkuNjM1NyAxOC44MDU1IDE5LjcxODJDMTguNDI5OCAyMC4wMTY3IDE4LjAwOSAyMC4yNTMgMTcuNTU4MyAyMC40MTcyQzE2LjE2MDMgMjAuOTE4MiAxNC42MDQ4IDIwLjYwOTIgMTMuMzg0NSAxOS40MzFDMTEuNjgxMyAxNy43OTkgMTEuODM0MyAxNS4xNjggMTMuMTkzMyAxMy40MTk3QzE0LjkxMTUgMTAuODE0MiAxNy44NjU4IDcuMTc3NSAxMy43NzYgMy45MjAyNUMxMy4wNDAzIDMuMzM0NSAxMi40OTU4IDIuODUxNSAxMC4xNzkgMi4xNjc1QzExLjY5NCAxLjg4MTc1IDEzLjA5ODggMS45NzAyNSAxNC42NjE4IDIuMzc5QzE1Ljc2NzMgMy4wMTggMTcuNTA2NSA0LjM4Mzc1IDE4LjA5NzUgNi4yMjk1QzE4Ljk5MjMgOS4wMjc3NCAxNi41MjQgMTMuMjExMiAxNS4zMzE1IDE0LjgyMjJDMTMuNjk0MyAxNy4wNTM1IDE2LjM0MzMgMTkuNDY2MiAxOC4yOTQgMTYuNzcxNUMxOS4zMTQgMTUuMzY3NSAyMS4wOTc1IDExLjM5MjUgMjAuNDc4IDguNDQ0OTlDMjAuMTE1IDYuNzczMjUgMTkuNjMyOCA1LjU1NDUgMTcuNzE3MyAzLjg4MDVDMTguMDcyIDQuMDk1IDE4LjQxNyA0LjMzOCAxOC43NTE1IDQuNjEwMjVDMjMuMjAyIDguODQ5MjQgMjIuNjg2IDE1LjQwMzUgMTkuNTc1OCAxOC45MTcyVjE4LjkxNTdaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9zdmc+Cg==',
+};
+
+export const injectiveEthereumMainnet: ChainInfoBase = {
+  id: 40,
+  blockChainName: 'evm',
+  name: 'Injective EVM Mainnet',
+  chainId: 'injective-1',
+  imgUrl:
+    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuNDI1MDIgNS41MzE5OUM0LjU0OTUyIDUuMzcyMjQgNC42ODA3NyA1LjIxOTI0IDQuODEyNzcgNS4wNjQ3NEM0LjgxODc3IDUuMDU3MjQgNC44MzIyNyA1LjA1NTc0IDQuODM4MjcgNS4wNDgyNEM0Ljg1MDI3IDUuMDMzMjQgNC44Njk3NyA1LjAyMzQ5IDQuODgxNzcgNS4wMDg0OUw0Ljg5Mzc3IDQuOTkzNDlDNC45ODUyNyA0LjkwNjQ5IDUuMDgyNzcgNC44MTE5OSA1LjE5NjAyIDQuNzI5NDlDNS41NzE3NyA0LjQzMDk5IDUuOTkyNTIgNC4xOTQ3NCA2LjQ0MzI3IDQuMDMwNDlDNy44NDEyNSAzLjUyOTQ5IDkuMzk2NzUgMy44Mzg0OSAxMC42MTcgNS4wMTY3NEMxMi4zMjAyIDYuNjQ4NzQgMTIuMTY3MiA5LjI3OTc1IDEwLjgwODIgMTEuMDI4QzkuMDg5MjUgMTMuNjMzNSA2LjEzNTc3IDE3LjI3MDIgMTAuMjI1NSAyMC41Mjc1QzEwLjk2MTIgMjEuMTEzMiAxMS41MDU3IDIxLjU5NjIgMTMuODIxNyAyMi4yODAyQzEyLjMwNzUgMjIuNTY2IDEwLjkwMjcgMjIuNDc3NSA5LjMzOTc1IDIyLjA2ODdDOC4yMzQyNSAyMS40Mjk3IDYuNDk1MDIgMjAuMDY0IDUuOTA0MDIgMTguMjE4MkM1LjAwOTI3IDE1LjQyIDcuNDc3NTIgMTEuMjM2NSA4LjY3IDkuNjI1NUMxMC4zMDczIDcuMzk0MjQgNy42NTgyNSA0Ljk4MTQ5IDUuNzA3NTIgNy42NzYyNUM0LjY4NzUyIDkuMDgwMjUgMi45MDQwMiAxMy4wNTUyIDMuNTIzNTIgMTYuMDAyN0MzLjg4NTc3IDE3LjY3NDUgNC4zNjg3NyAxOC44OTMyIDYuMjg0MjcgMjAuNTY3MkM1LjkyMjc3IDIwLjM0ODIgNS41NzcwMiAyMC4xMDQ1IDUuMjUwMDIgMTkuODM3NUMwLjc5ODc3MiAxNS41OTg1IDEuMzE1NTIgOS4wNDQyNSA0LjQyNTc3IDUuNTMwNDlMNC40MjUwMiA1LjUzMTk5WiIgZmlsbD0iY3VycmVudENvbG9yIi8+CjxwYXRoIGQ9Ik0xOS41NzU4IDE4LjkxNTdDMTkuNDUxMyAxOS4wNzU1IDE5LjMyIDE5LjIyODUgMTkuMTg4IDE5LjM4M0MxOS4xODIgMTkuMzkwNSAxOS4xNjg1IDE5LjM5MiAxOS4xNjI1IDE5LjM5OTVDMTkuMTUwNSAxOS40MTQ1IDE5LjEzMSAxOS40MjQyIDE5LjExOTggMTkuNDM5MkwxOS4xMDc4IDE5LjQ1NDJDMTkuMDE2MyAxOS41NDEyIDE4LjkxODggMTkuNjM1NyAxOC44MDU1IDE5LjcxODJDMTguNDI5OCAyMC4wMTY3IDE4LjAwOSAyMC4yNTMgMTcuNTU4MyAyMC40MTcyQzE2LjE2MDMgMjAuOTE4MiAxNC42MDQ4IDIwLjYwOTIgMTMuMzg0NSAxOS40MzFDMTEuNjgxMyAxNy43OTkgMTEuODM0MyAxNS4xNjggMTMuMTkzMyAxMy40MTk3QzE0LjkxMTUgMTAuODE0MiAxNy44NjU4IDcuMTc3NSAxMy43NzYgMy45MjAyNUMxMy4wNDAzIDMuMzM0NSAxMi40OTU4IDIuODUxNSAxMC4xNzkgMi4xNjc1QzExLjY5NCAxLjg4MTc1IDEzLjA5ODggMS45NzAyNSAxNC42NjE4IDIuMzc5QzE1Ljc2NzMgMy4wMTggMTcuNTA2NSA0LjM4Mzc1IDE4LjA5NzUgNi4yMjk1QzE4Ljk5MjMgOS4wMjc3NCAxNi41MjQgMTMuMjExMiAxNS4zMzE1IDE0LjgyMjJDMTMuNjk0MyAxNy4wNTM1IDE2LjM0MzMgMTkuNDY2MiAxOC4yOTQgMTYuNzcxNUMxOS4zMTQgMTUuMzY3NSAyMS4wOTc1IDExLjM5MjUgMjAuNDc4IDguNDQ0OTlDMjAuMTE1IDYuNzczMjUgMTkuNjMyOCA1LjU1NDUgMTcuNzE3MyAzLjg4MDVDMTguMDcyIDQuMDk1IDE4LjQxNyA0LjMzOCAxOC43NTE1IDQuNjEwMjVDMjMuMjAyIDguODQ5MjQgMjIuNjg2IDE1LjQwMzUgMTkuNTc1OCAxOC45MTcyVjE4LjkxNTdaIiBmaWxsPSJjdXJyZW50Q29sb3IiLz4KPC9zdmc+Cg==',
+};
+
+export const bitkub: ChainInfoEVM = {
+  id: 41,
+  blockChainName: 'evm',
+  name: 'Bitkub',
+  chainId: '0x60',
+  imgUrl:
+    'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik02OTkuNTIgMTg2Ljk0NGMtMTcuNiAxNy42LTI4LjQ4IDQxLjkyLTI4LjQ4IDY4LjczNnMxMC44OCA1MS4yIDI4LjQ4IDY4LjczNmwxODcuMDcyIDE4Ny4xMzYtMTg3LjUyIDE4Ny41Mi05NS4zNi05NS40MjRjLTE3LjYtMTcuNi00MS45Mi0yOC40OC02OC43MzYtMjguNDhzLTUxLjEzNiAxMC44OC02OC43MzYgMjguNDh2MGwyMzIuNzY4IDIzMi44MzIgMzI1LjA1Ni0zMjUuMDU2eiI+PC9wYXRoPgo8cGF0aCBkPSJNNzY2LjIwOCA1MTJjMCAzNi44LTI5LjgyNCA2Ni42ODgtNjYuNjg4IDY2LjY4OHMtNjYuNjg4LTI5LjgyNC02Ni42ODgtNjYuNjg4YzAtMzYuOCAyOS44MjQtNjYuNjg4IDY2LjY4OC02Ni42ODhzNjYuNjg4IDI5LjgyNCA2Ni42ODggNjYuNjg4eiI+PC9wYXRoPgo8cGF0aCBkPSJNMzI0LjQ4IDgzNy4wNTZjMTcuNi0xNy42IDI4LjQ4LTQxLjkyIDI4LjQ4LTY4LjczNnMtMTAuODgtNTEuMTM2LTI4LjQ4LTY4LjczNmwtMTg3LjAwOC0xODcuMTM2IDE4Ny41Mi0xODcuNTIgOTUuMjk2IDk1LjQyNGMxNy42IDE3LjYgNDEuOTIgMjguNDggNjguNzM2IDI4LjQ4czUxLjEzNi0xMC44OCA2OC43MzYtMjguNDh2MGwtMjMyLjgzMi0yMzIuODMyLTMyNS4wNTYgMzI1LjA1NnoiPjwvcGF0aD4KPHBhdGggZD0iTTM5MS4xNjggNTEyYzAgMzYuOC0yOS44MjQgNjYuNjg4LTY2LjY4OCA2Ni42ODhzLTY2LjY4OC0yOS44MjQtNjYuNjg4LTY2LjY4OGMwLTM2LjggMjkuODI0LTY2LjY4OCA2Ni42ODgtNjYuNjg4czY2LjY4OCAyOS44MjQgNjYuNjg4IDY2LjY4OHoiPjwvcGF0aD4KPC9zdmc+Cg==',
+  chainName: 'Bitkub',
+  nativeCurrency: {
+    name: 'KUB',
+    symbol: 'KUB',
+    decimals: 18,
+  },
+  rpcUrls: ['https://rpc.bitkubchain.io/'],
+};
+
 export const evmChains: ChainInfo[] = [
   {
-    id: 0,
+    id: 'evm0',
     blockChainName: 'evm',
     name: 'Ethereum',
     chainId: '0x1',
@@ -685,7 +778,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.infura.io/v3/92d53cee52834368b0fabb42fa1b5570'],
   },
   {
-    id: 1,
+    id: 'evm1',
     blockChainName: 'evm',
     name: 'Ethereum PoW',
     chainId: '0x2711',
@@ -696,7 +789,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.ethereumpow.org'],
   },
   {
-    id: 2,
+    id: 'evm2',
     blockChainName: 'evm',
     name: 'BNB Chain',
     chainId: '0x38',
@@ -707,7 +800,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://bsc-mainnet.nodereal.io/v1/5c4ed7c647c0479f9ae118b0b62c745c'],
   },
   {
-    id: 3,
+    id: 'evm3',
     blockChainName: 'evm',
     name: 'HECO Chain',
     chainId: '0x80',
@@ -718,7 +811,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://http-mainnet.hecochain.com'],
   },
   {
-    id: 4,
+    id: 'evm4',
     blockChainName: 'evm',
     name: 'OKX Chain',
     chainId: '0x42',
@@ -729,7 +822,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://exchainrpc.okex.org'],
   },
   {
-    id: 5,
+    id: 'evm5',
     blockChainName: 'evm',
     name: 'GateChain',
     chainId: '0x56',
@@ -740,7 +833,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://evm.gatenode.cc'],
   },
   {
-    id: 6,
+    id: 'evm6',
     blockChainName: 'evm',
     name: 'Kucoin Chain',
     chainId: '0x141',
@@ -751,7 +844,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpc-mainnet.kcc.network'],
   },
   {
-    id: 7,
+    id: 'evm7',
     blockChainName: 'evm',
     name: 'Avalanche',
     chainId: '0xa86a',
@@ -762,7 +855,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
   },
   {
-    id: 8,
+    id: 'evm8',
     blockChainName: 'evm',
     name: 'Polygon',
     chainId: '0x89',
@@ -773,7 +866,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://polygon-mainnet.infura.io/v3/92d53cee52834368b0fabb42fa1b5570'],
   },
   {
-    id: 9,
+    id: 'evm9',
     blockChainName: 'evm',
     name: 'Fantom',
     chainId: '0xfa',
@@ -784,7 +877,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpcapi.fantom.network'],
   },
   {
-    id: 10,
+    id: 'evm10',
     blockChainName: 'evm',
     name: 'Gnosis Chain',
     chainId: '0x64',
@@ -795,18 +888,18 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpc.xdaichain.com'],
   },
   {
-    id: 11,
+    id: 'evm11',
     blockChainName: 'evm',
-    name: 'TomoChain',
+    name: 'Viction',
     chainId: '0x58',
     imgUrl:
-      'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiPgo8dGl0bGU+YXBwX3RvbW9jaGFpbjwvdGl0bGU+CjxwYXRoIGQ9Ik01LjY2OCAxLjMzM3Y0LjY2NGwtMi4zMzUgMi4zMzV2LTQuNjY0bDIuMzM1LTIuMzM1eiI+PC9wYXRoPgo8cGF0aCBkPSJNMTIuNjY3IDEwLjY2N2MwIDEuMjM4LTAuNDkyIDIuNDI1LTEuMzY3IDMuM3MtMi4wNjIgMS4zNjctMy4zIDEuMzY3LTIuNDI1LTAuNDkyLTMuMy0xLjM2N2MtMC44NzUtMC44NzUtMS4zNjctMi4wNjItMS4zNjctMy4zdi0yLjMzNWgyLjMzNXYyLjMzNWMtMC4wMDIgMC4zMDggMC4wNTcgMC42MTMgMC4xNzMgMC44OThzMC4yODggMC41NDQgMC41MDUgMC43NjNjMC4yMTcgMC4yMTggMC40NzUgMC4zOTIgMC43NTkgMC41MXMwLjU4OSAwLjE3OSAwLjg5NyAwLjE3OSAwLjYxMy0wLjA2MSAwLjg5Ny0wLjE3OWMwLjI4NC0wLjExOCAwLjU0Mi0wLjI5MiAwLjc1OS0wLjUxczAuMzg5LTAuNDc4IDAuNTA1LTAuNzYzYzAuMTE2LTAuMjg1IDAuMTc1LTAuNTkgMC4xNzMtMC44OThoMi4zM3oiPjwvcGF0aD4KPHBhdGggZD0iTTEyLjY2NyA1Ljk5OGwtMi4zMzUgMi4zMzVoLTYuOTk5bDIuMzM1LTIuMzM1aDYuOTk5eiI+PC9wYXRoPgo8L3N2Zz4K',
-    chainName: 'TomoChain',
-    nativeCurrency: { name: 'TomoChain', symbol: 'TOMO', decimals: 18 },
+      'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NTkuODQgNTY1Ljk0Ij4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjMjMxZjIwOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Im00NzguNzksODMuMTd2MTU3LjVjLTYwLjg5LDI2LjYxLTEyOC4xNSw0MS4zNi0xOTguODcsNDEuMzZzLTEzNy45OC0xNC43Ni0xOTguODctNDEuMzZWODMuMTdoLjAyYzYwLjg5LDI2LjYxLDEyOC4xNSw0MS4zNiwxOTguODUsNDEuMzZzMTM3Ljk2LTE0Ljc2LDE5OC44NS00MS4zNmguMDJaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtNDc4Ljc5LDQ4NC44OXYtMTU3LjVjLTYwLjg5LTI2LjYxLTEyOC4xNS00MS4zNi0xOTguODctNDEuMzZzLTEzNy45OCwxNC43Ni0xOTguODcsNDEuMzZ2MTU3LjVoLjAyYzYwLjg5LTI2LjYxLDEyOC4xNS00MS4zNiwxOTguODUtNDEuMzZzMTM3Ljk2LDE0Ljc2LDE5OC44NSw0MS4zNmguMDJaIi8+Cjwvc3ZnPg==',
+    chainName: 'Viction',
+    nativeCurrency: { name: 'Viction', symbol: 'VIC', decimals: 18 },
     rpcUrls: ['https://rpc.tomochain.com'],
   },
   {
-    id: 12,
+    id: 'evm12',
     blockChainName: 'evm',
     name: 'KardiaChain',
     chainId: '0x18',
@@ -817,7 +910,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpc.kardiachain.io'],
   },
   {
-    id: 13,
+    id: 'evm13',
     blockChainName: 'evm',
     name: 'Ronin',
     chainId: '0x7e4',
@@ -828,7 +921,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://api.roninchain.com/rpc'],
   },
   {
-    id: 14,
+    id: 'evm14',
     blockChainName: 'evm',
     name: 'Celo',
     chainId: '0xA4EC',
@@ -839,7 +932,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://forno.celo.org'],
   },
   {
-    id: 15,
+    id: 'evm15',
     blockChainName: 'evm',
     name: 'Klaytn',
     chainId: '0x2019',
@@ -850,7 +943,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://kaikas.cypress.klaytn.net:8651'],
   },
   {
-    id: 16,
+    id: 'evm16',
     blockChainName: 'evm',
     name: 'Harmony',
     chainId: '0x63564C40',
@@ -861,7 +954,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://api.harmony.one'],
   },
   {
-    id: 17,
+    id: 'evm17',
     blockChainName: 'evm',
     name: 'Optimism',
     chainId: '0xA',
@@ -872,7 +965,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.optimism.io'],
   },
   {
-    id: 18,
+    id: 'evm18',
     blockChainName: 'evm',
     name: 'Arbitrum',
     chainId: '0xa4b1',
@@ -883,7 +976,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://arb1.arbitrum.io/rpc'],
   },
   {
-    id: 19,
+    id: 'evm19',
     blockChainName: 'evm',
     name: 'Boba Network',
     chainId: '0x120',
@@ -894,7 +987,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.boba.network'],
   },
   {
-    id: 20,
+    id: 'evm20',
     blockChainName: 'evm',
     name: 'Aurora',
     chainId: '0x4e454152',
@@ -905,7 +998,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.aurora.dev'],
   },
   {
-    id: 21,
+    id: 'evm21',
     blockChainName: 'evm',
     name: 'PlatON Network',
     chainId: '0x335F9',
@@ -916,7 +1009,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://openapi2.platon.network/rpc'],
   },
   {
-    id: 22,
+    id: 'evm22',
     blockChainName: 'evm',
     name: 'Cronos',
     chainId: '0x19',
@@ -927,7 +1020,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://evm-cronos.crypto.org'],
   },
   {
-    id: 23,
+    id: 'evm23',
     blockChainName: 'evm',
     name: 'BitTorrent Chain',
     chainId: '0xc7',
@@ -938,7 +1031,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpc.bt.io'],
   },
   {
-    id: 24,
+    id: 'evm24',
     blockChainName: 'evm',
     name: 'Theta Network',
     chainId: '0x169',
@@ -949,7 +1042,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://eth-rpc-api.thetatoken.org/rpc'],
   },
   {
-    id: 25,
+    id: 'evm25',
     blockChainName: 'evm',
     name: 'Moonbeam',
     chainId: '0x504',
@@ -960,7 +1053,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://rpc.api.moonbeam.network'],
   },
   {
-    id: 26,
+    id: 'evm26',
     blockChainName: 'evm',
     name: 'Oasis Network',
     chainId: '0xa516',
@@ -971,7 +1064,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://emerald.oasis.dev'],
   },
   {
-    id: 27,
+    id: 'evm27',
     blockChainName: 'evm',
     name: 'Polygon zkEVM',
     chainId: '0x44D',
@@ -982,7 +1075,7 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://zkevm-rpc.com'],
   },
   {
-    id: 28,
+    id: 'evm28',
     blockChainName: 'evm',
     name: 'zkSync Era',
     chainId: '0x144',
@@ -993,18 +1086,48 @@ export const evmChains: ChainInfo[] = [
     rpcUrls: ['https://mainnet.era.zksync.io'],
   },
   {
-    id: 29,
+    id: 'evm29',
     blockChainName: 'evm',
-    name: 'BNB Testnet',
-    chainId: '0x61',
+    name: 'Base',
+    chainId: '0x2105',
     imgUrl:
-      'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiB2aWV3Qm94PSIwIDAgMTYgMTYiPgo8dGl0bGU+YXBwX2JpbmFuY2U8L3RpdGxlPgo8cGF0aCBkPSJNOS40MjkgMTMuMDgwdjEuNjc1bC0xLjQ1IDAuODU5LTEuNDA3LTAuODU5di0xLjY3NWwxLjQwNyAwLjg1OSAxLjQ1LTAuODU5ek0xLjY2NyA3LjI4MWwxLjQwNyAwLjg1OXYyLjg3OGwyLjQzMSAxLjQ2djEuNjc1bC0zLjgzOS0yLjI3NnYtNC41OTZ6TTE0LjI5MSA3LjI4MXY0LjU5NmwtMy44ODEgMi4yNzZ2LTEuNjc1bDIuNDMxLTEuNDZ2LTIuODc3bDEuNDUtMC44NnpNMTAuNDEgNS4wMDVsMS40NSAwLjg1OXYxLjY3NWwtMi40MzEgMS40NnYyLjkyMWwtMS40MDcgMC44NTktMS40MDctMC44NTl2LTIuOTJsLTIuNTE2LTEuNDYxdi0xLjY3NWwxLjQ1LTAuODU5IDIuNDMxIDEuNDYgMi40MzEtMS40NnpNNC4wOTggOC43NDJsMS40MDcgMC44NTl2MS42NzVsLTEuNDA3LTAuODU5di0xLjY3NXpNMTEuODYgOC43NDJ2MS42NzVsLTEuNDA3IDAuODU5di0xLjY3NWwxLjQwNy0wLjg1OXpNMy4wNzQgMy41NDVsMS40NSAwLjg1OS0xLjQ1IDAuODU5djEuNjc1bC0xLjQwNy0wLjg1OXYtMS42NzVsMS40MDctMC44NTl6TTEyLjg4MyAzLjU0NWwxLjQ1IDAuODU5djEuNjc1bC0xLjQ1IDAuODU5di0xLjY3NWwtMS40MDctMC44NTkgMS40MDctMC44NTl6TTcuOTc5IDMuNTQ1bDEuNDUgMC44NTktMS40NSAwLjg1OS0xLjQwNy0wLjg1OSAxLjQwNy0wLjg1OXpNNy45NzkgMC42NjdsMy44ODEgMi4yNzYtMS40MDcgMC44NTktMi40MzEtMS40Ni0yLjQ3MyAxLjQ2MS0xLjQwNy0wLjg1OSAzLjgzOC0yLjI3N3oiPjwvcGF0aD4KPC9zdmc+Cg==',
-    chainName: 'Binance Smart Chain Testnet',
+      'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik01MTEuMTA3IDEwMjRjMjgzLjI2NCAwIDUxMi44OTMtMjI5LjIyOSA1MTIuODkzLTUxMnMtMjI5LjYyOS01MTItNTEyLjg5My01MTJjLTI2OC43NDQgMC00ODkuMjExIDIwNi4zMzItNTExLjEwNyA0NjguOTYzaDY3Ny45MjZ2ODYuMDc0aC02NzcuOTI2YzIxLjg5NiAyNjIuNjMgMjQyLjM2NCA0NjguOTYzIDUxMS4xMDcgNDY4Ljk2M3oiPjwvcGF0aD4KPC9zdmc+Cg==',
+    chainName: 'Base',
     nativeCurrency: {
-      name: 'BNB',
-      symbol: 'BNB',
+      name: 'ETH',
+      symbol: 'ETH',
       decimals: 18,
     },
-    rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    rpcUrls: ['https://mainnet.base.org'],
+  },
+  {
+    id: 'evm30',
+    blockChainName: 'evm',
+    name: 'Base Testnet',
+    chainId: '0x14A33',
+    imgUrl:
+      'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik01MTEuMTA3IDEwMjRjMjgzLjI2NCAwIDUxMi44OTMtMjI5LjIyOSA1MTIuODkzLTUxMnMtMjI5LjYyOS01MTItNTEyLjg5My01MTJjLTI2OC43NDQgMC00ODkuMjExIDIwNi4zMzItNTExLjEwNyA0NjguOTYzaDY3Ny45MjZ2ODYuMDc0aC02NzcuOTI2YzIxLjg5NiAyNjIuNjMgMjQyLjM2NCA0NjguOTYzIDUxMS4xMDcgNDY4Ljk2M3oiPjwvcGF0aD4KPC9zdmc+Cg==',
+    chainName: 'Base Testnet',
+    nativeCurrency: {
+      name: 'ETH',
+      symbol: 'ETH',
+      decimals: 18,
+    },
+    rpcUrls: ['https://goerli.base.org'],
+  },
+  {
+    id: 'evm31',
+    blockChainName: 'evm',
+    name: 'Bitkub',
+    chainId: '0x60',
+    imgUrl:
+      'data:image/svg+xml;base64,PCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMjQiIGhlaWdodD0iMTAyNCIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+Cjx0aXRsZT48L3RpdGxlPgo8ZyBpZD0iaWNvbW9vbi1pZ25vcmUiPgo8L2c+CjxwYXRoIGQ9Ik02OTkuNTIgMTg2Ljk0NGMtMTcuNiAxNy42LTI4LjQ4IDQxLjkyLTI4LjQ4IDY4LjczNnMxMC44OCA1MS4yIDI4LjQ4IDY4LjczNmwxODcuMDcyIDE4Ny4xMzYtMTg3LjUyIDE4Ny41Mi05NS4zNi05NS40MjRjLTE3LjYtMTcuNi00MS45Mi0yOC40OC02OC43MzYtMjguNDhzLTUxLjEzNiAxMC44OC02OC43MzYgMjguNDh2MGwyMzIuNzY4IDIzMi44MzIgMzI1LjA1Ni0zMjUuMDU2eiI+PC9wYXRoPgo8cGF0aCBkPSJNNzY2LjIwOCA1MTJjMCAzNi44LTI5LjgyNCA2Ni42ODgtNjYuNjg4IDY2LjY4OHMtNjYuNjg4LTI5LjgyNC02Ni42ODgtNjYuNjg4YzAtMzYuOCAyOS44MjQtNjYuNjg4IDY2LjY4OC02Ni42ODhzNjYuNjg4IDI5LjgyNCA2Ni42ODggNjYuNjg4eiI+PC9wYXRoPgo8cGF0aCBkPSJNMzI0LjQ4IDgzNy4wNTZjMTcuNi0xNy42IDI4LjQ4LTQxLjkyIDI4LjQ4LTY4LjczNnMtMTAuODgtNTEuMTM2LTI4LjQ4LTY4LjczNmwtMTg3LjAwOC0xODcuMTM2IDE4Ny41Mi0xODcuNTIgOTUuMjk2IDk1LjQyNGMxNy42IDE3LjYgNDEuOTIgMjguNDggNjguNzM2IDI4LjQ4czUxLjEzNi0xMC44OCA2OC43MzYtMjguNDh2MGwtMjMyLjgzMi0yMzIuODMyLTMyNS4wNTYgMzI1LjA1NnoiPjwvcGF0aD4KPHBhdGggZD0iTTM5MS4xNjggNTEyYzAgMzYuOC0yOS44MjQgNjYuNjg4LTY2LjY4OCA2Ni42ODhzLTY2LjY4OC0yOS44MjQtNjYuNjg4LTY2LjY4OGMwLTM2LjggMjkuODI0LTY2LjY4OCA2Ni42ODgtNjYuNjg4czY2LjY4OCAyOS44MjQgNjYuNjg4IDY2LjY4OHoiPjwvcGF0aD4KPC9zdmc+Cg==',
+    chainName: 'Bitkub',
+    nativeCurrency: {
+      name: 'KUB',
+      symbol: 'KUB',
+      decimals: 18,
+    },
+    rpcUrls: ['https://rpc.bitkubchain.io/'],
   },
 ];

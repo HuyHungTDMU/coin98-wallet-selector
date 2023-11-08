@@ -1,13 +1,7 @@
 {
-  "extends": "@coin98t/tsconfig/react-library.json",
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules"
-  ],
+  "extends": "tsconfig/react-library.json",
+  "include": ["src"],
+  "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "outDir": "./dist",
     "jsx": "react-jsx"

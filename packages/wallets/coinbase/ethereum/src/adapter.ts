@@ -15,7 +15,7 @@ import {
   WalletSendTransactionError,
   WalletSignMessageError,
 } from '@coin98t/wallet-adapter-base';
-import type { Transaction } from 'web3-core';
+import { Transaction } from 'web3-types';
 import iconUrl from './icon';
 
 interface Coinbase extends EventEmitter {
@@ -72,6 +72,10 @@ export class CoinbaseAdapterEthereum extends BaseMessageSignerWalletAdapterEVM {
 
   get address() {
     return this._address;
+  }
+
+  get provider() {
+    return this._wallet;
   }
 
   private _readyState: WalletReadyState =
@@ -329,25 +333,7 @@ export class CoinbaseAdapterEthereum extends BaseMessageSignerWalletAdapterEVM {
   }
 
   async signTypedData(msgParams: TypedMessage[]): Promise<WalletReturnType<string, string>> {
-    try {
-      const wallet = this._wallet;
-      if (!wallet) throw new WalletNotConnectedError();
-      try {
-        const msg = msgParams;
-        const from = this._address;
-        const response = (await wallet.request({
-          method: 'eth_signTypedData',
-          params: [msg, from],
-        })) as string;
-
-        return { data: response, error: null, isError: false };
-      } catch (error: any) {
-        throw new WalletSignMessageError(error?.message, error);
-      }
-    } catch (error: any) {
-      this.emit('error', error);
-      return { data: null, error: error?.error?.message, isError: true };
-    }
+    return { data: null, error: "The method 'eth_signTypedData' is not supported.", isError: true };
   }
 
   private _accountChanged = (accounts: Array<string>) => {

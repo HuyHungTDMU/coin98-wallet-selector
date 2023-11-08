@@ -2,9 +2,11 @@ import {
   AdapterCosmos,
   AdapterEVM,
   AdapterSolana,
+  AdapterNear,
   BaseMessageSignerWalletAdapterCosmos,
   BaseMessageSignerWalletAdapterEVM,
   BaseMessageSignerWalletAdapterSolana,
+  BaseFullySignerWalletAdapterEVM,
   SendTransactionOptions,
   SignerWalletAdapterSolanaProps,
   SupportedTransactionVersions,
@@ -18,8 +20,11 @@ import {
   WalletNotConnectedError,
   WalletNotReadyError,
   WalletReturnType,
+  WatchAssetType,
+  BaseMessageSignerWalletAdapterNear,
+  Account,
 } from '@coin98t/wallet-adapter-base';
-import { type Adapter, WalletReadyState } from '@coin98t/wallet-adapter-base';
+import { type Adapter, WalletReadyState, SignMessageParams } from '@coin98t/wallet-adapter-base';
 import {
   Connection,
   PublicKey,
@@ -29,9 +34,10 @@ import {
 } from '@solana/web3.js';
 
 import React, { type ReactNode, useEffect, useState, useMemo, useCallback, useRef, useReducer } from 'react';
-import { Transaction } from 'web3-core';
+import { Transaction } from 'web3-types';
 import { chainsUseAddress } from '../../constants';
 import { WalletNotSelectedError } from '../../errors';
+import { isFullySignerEVM } from '../../utils';
 import { WalletContext } from '../hooks/useWallet.js';
 import { AdapterActionKind, reducer } from '../reducer';
 import { WalletStoreType } from './WalletProvider.js';
@@ -77,14 +83,15 @@ export function WalletProviderBase({
     disconnecting: false,
     connecting: false,
     publicKey: (adapter as AdapterSolana)?.publicKey,
-    address: (adapter as AdapterEVM)?.address,
+    address: (adapter as AdapterEVM | AdapterCosmos)?.address,
     selectedBlockChain: adapter?.chain!,
+    provider: adapter?.provider,
   });
-  const { connecting, connected, disconnecting, publicKey, address, selectedBlockChain } = state;
+  const { connecting, connected, disconnecting, publicKey, address, selectedBlockChain, provider } = state;
 
   const [selectedChainId, setSelectedChainId] = useState<string[] | string | null>(null);
 
-  const [isUninstall, setIsUninstall] = useState(false);
+  const [isNotInstalled, setIsNotInstalled] = useState(false);
 
   const isConnectingRef = useRef(false);
   const isDisconnectingRef = useRef(false);
@@ -241,7 +248,7 @@ export function WalletProviderBase({
     // If detect notInstalled set wallet active is null and open page to install
     if (!(wallet?.readyState === WalletReadyState.Installed || wallet?.readyState === WalletReadyState.Loadable)) {
       if (typeof window !== 'undefined' && wallet?.adapter) {
-        setIsUninstall(true);
+        setIsNotInstalled(true);
       }
       return onConnectError('Wallet not found', 'detect');
     }
@@ -269,7 +276,7 @@ export function WalletProviderBase({
   }, [connected, onAutoConnectRequest, onConnectError, wallet]);
 
   const handleRequestInstall = (value: boolean) => {
-    setIsUninstall(value);
+    setIsNotInstalled(value);
   };
 
   //Func handle
@@ -279,7 +286,7 @@ export function WalletProviderBase({
       if (!wallet) throw handleErrorRef.current(new WalletNotSelectedError());
       const { adapter, readyState } = wallet;
       if (!(readyState === WalletReadyState.Installed || readyState === WalletReadyState.Loadable))
-        setIsUninstall(true);
+        setIsNotInstalled(true);
       isConnectingRef.current = true;
       dispatch({ type: AdapterActionKind.CONNECTING });
       try {
@@ -325,6 +332,7 @@ export function WalletProviderBase({
       switch (adapter?.chain) {
         case 'solana':
         case 'cosmos':
+        case 'near':
           return;
         case 'evm':
           return await (adapter as AdapterEVM).switchNetwork(chainId, callBackAddChain);
@@ -346,6 +354,9 @@ export function WalletProviderBase({
   // Send TransactionCosmos
   async function handleSendTransaction(transaction: TransactionCosmos): Promise<WalletReturnType<string, string>>;
 
+  // Send TransactionNear
+  async function handleSendTransaction(transaction: any): Promise<WalletReturnType<string, string>>;
+
   async function handleSendTransaction(
     transaction: any,
     connection?: Connection,
@@ -361,6 +372,8 @@ export function WalletProviderBase({
         return await (adapter as AdapterEVM).sendTransaction(transaction);
       case 'cosmos':
         return await (adapter as AdapterCosmos).sendTransaction(transaction);
+      case 'near':
+        return await (adapter as any).signAndSendTransaction(transaction);
       default:
         return await (adapter as AdapterEVM).sendTransaction(transaction);
     }
@@ -369,6 +382,24 @@ export function WalletProviderBase({
   const sendTransaction =
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useCallback(handleSendTransaction, [adapter, connected]);
+
+  // SignAndSendTransaction on Near
+  async function handleSendTransactions(transactions: any) {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+
+    switch (adapter?.chain) {
+      case 'near':
+        return await (adapter as any).signAndSendTransactions(transactions);
+      default:
+        throw new Error(`Not support this function on ${selectedBlockChain}`);
+    }
+  }
+
+  // Send Transaction Overload
+  const sendTransactions =
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useCallback(handleSendTransactions, [adapter, connected]);
 
   // Sign a transaction if the wallet supports it
   const signTransaction: SignerWalletAdapterSolanaProps['signTransaction'] | undefined = useMemo(() => {
@@ -401,8 +432,22 @@ export function WalletProviderBase({
   // Sign Message Cosmos
   async function handleSignMessage(message: Uint8Array | string): Promise<WalletReturnType<string, string>>;
 
+  async function handleSignMessage(
+    message: string,
+    recipient: string,
+    nonce: Buffer,
+    callbackUrl?: string,
+    state?: string,
+  ): Promise<WalletReturnType<string, string>>;
+
   //Sign Message Overload
-  async function handleSignMessage(message: string | Uint8Array) {
+  async function handleSignMessage(
+    message: string | Uint8Array,
+    recipient?: string,
+    nonce?: Buffer,
+    callbackUrl?: string,
+    state?: string,
+  ) {
     if (adapter && 'signMessage' in adapter) {
       switch (adapter.chain) {
         case 'solana':
@@ -416,6 +461,15 @@ export function WalletProviderBase({
           return await (adapter as unknown as BaseMessageSignerWalletAdapterCosmos).signMessage(
             message as string | Uint8Array,
           );
+        case 'near':
+          if (!connected) throw handleErrorRef.current(new WalletNotConnectedError(), adapter);
+          return await (adapter as unknown as BaseMessageSignerWalletAdapterNear).signMessage({
+            message,
+            recipient,
+            nonce,
+            callbackUrl,
+            state,
+          } as SignMessageParams);
         default:
           return undefined;
       }
@@ -438,6 +492,7 @@ export function WalletProviderBase({
     switch (adapter?.chain) {
       case 'cosmos':
       case 'solana':
+      case 'near':
         throw new Error();
       case 'evm':
         if (type === 'v1') return await (adapter as AdapterEVM).signTypedData(msgParams as TypedMessage[]);
@@ -452,6 +507,101 @@ export function WalletProviderBase({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useCallback(handleSignTypedData, [adapter, connected]);
 
+  async function handleWatchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>> {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+
+    switch (adapter?.chain) {
+      case 'cosmos':
+      case 'solana':
+      case 'near':
+        throw new Error();
+      case 'evm':
+        if (isFullySignerEVM(adapter.id)) return await (adapter as BaseFullySignerWalletAdapterEVM).watchAsset(params);
+        throw new Error('This function is not supported');
+      default:
+        throw new Error();
+    }
+  }
+
+  // watchAsset if the wallet supports it
+  const watchAsset = useCallback(handleWatchAsset, [adapter, connected]);
+
+  async function handleEthSign(message: string): Promise<WalletReturnType<string, string>> {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+
+    switch (adapter?.chain) {
+      case 'cosmos':
+      case 'solana':
+      case 'near':
+        throw new Error();
+      case 'evm':
+        if (isFullySignerEVM(adapter.id)) return await (adapter as BaseFullySignerWalletAdapterEVM).ethSign(message);
+        throw new Error('This function is not supported');
+      default:
+        throw new Error();
+    }
+  }
+
+  // ethSign if the wallet supports it
+  const ethSign = useCallback(handleEthSign, [adapter, connected]);
+
+  async function handleGetEncryptionPublicKey(): Promise<WalletReturnType<string, string>> {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+
+    switch (adapter?.chain) {
+      case 'cosmos':
+      case 'solana':
+      case 'near':
+        throw new Error();
+      case 'evm':
+        if (isFullySignerEVM(adapter.id))
+          return await (adapter as BaseFullySignerWalletAdapterEVM).getEncryptionPublicKey();
+        throw new Error('This function is not supported');
+      default:
+        throw new Error();
+    }
+  }
+
+  // getEncryptionPublicKey if the wallet supports it
+  const getEncryptionPublicKey = useCallback(handleGetEncryptionPublicKey, [adapter, connected]);
+
+  async function handleEthDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>> {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+
+    switch (adapter?.chain) {
+      case 'cosmos':
+      case 'solana':
+      case 'near':
+        throw new Error();
+      case 'evm':
+        if (isFullySignerEVM(adapter.id))
+          return await (adapter as BaseFullySignerWalletAdapterEVM).ethDecrypt(message, address);
+        throw new Error('This function is not supported');
+      default:
+        throw new Error();
+    }
+  }
+
+  // getEncryptionPublicKey if the wallet supports it
+  const ethDecrypt = useCallback(handleEthDecrypt, [adapter, connected]);
+
+  const handleGetAccount = useCallback((): Account | undefined => {
+    if (!adapter) throw new Error();
+    if (!connected) throw new Error();
+    switch (adapter?.chain) {
+      case 'solana':
+      case 'cosmos':
+      case 'evm':
+        throw new Error('This function is not supported');
+      case 'near':
+        return (adapter as AdapterNear).getAccounts();
+    }
+  }, [adapter, connected]);
+
   return (
     <WalletContext.Provider
       value={{
@@ -465,8 +615,8 @@ export function WalletProviderBase({
         connecting,
         disconnecting,
         selectedBlockChain,
-        isUninstall,
-        // Chỉ trả lại khi wallet đã connect thành công với chain đó
+        isNotInstalled,
+        provider,
         selectedChainId,
         selectWallet: onSelectWallet,
         disconnect: handleDisconnect,
@@ -478,6 +628,12 @@ export function WalletProviderBase({
         signAllTransactions,
         signMessage,
         signTypedData,
+        sendTransactions,
+        ethSign,
+        watchAsset,
+        getEncryptionPublicKey,
+        ethDecrypt,
+        getAccounts: handleGetAccount,
       }}
     >
       {children}

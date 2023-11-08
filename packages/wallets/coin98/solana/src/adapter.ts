@@ -91,6 +91,10 @@ export class Coin98WalletAdapterSolana extends BaseMessageSignerWalletAdapterSol
     return this._readyState;
   }
 
+  get provider() {
+    return this._wallet;
+  }
+
   async connect(): Promise<void> {
     try {
       if (this.connected || this.connecting) return;

@@ -1,6 +1,6 @@
 {
   "name": "@coin98t/wallet-adapter-base",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "@solana/web3.js": "^1.58.0",
-    "@coin98t/tsconfig": "workspace:*",
+    "tsconfig": "workspace:*",
     "tsup": "^6.6.3",
-    "web3-core": "^1.8.2"
+    "web3-types": "^1.2.0"
   },
   "dependencies": {
     "@solana/wallet-standard-features": "^1.0.1",
@@ -25,6 +25,9 @@
     "@wallet-standard/features": "^1.0.3",
     "@walletconnect/types": "^2.8.5",
     "eventemitter3": "^5.0.0",
-    "long": "^5.2.3"
+    "long": "^5.2.3",
+    "near-api-js": "^2.1.4",
+    "web3-types": "^1.2.0",
+    "@near-js/crypto": "^0.0.5"
   }
 }

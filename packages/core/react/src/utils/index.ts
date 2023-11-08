@@ -18,3 +18,4 @@ export const handleErrorAdapter = (
   }
   return error;
 };
+export const isFullySignerEVM = (value: string) => ['coin98_ether', 'metamask_ether'].includes(value);

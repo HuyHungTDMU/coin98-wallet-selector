@@ -1,6 +1,6 @@
 export interface ChainInfoBase {
-  id: number;
-  blockChainName: 'evm' | 'solana' | 'cosmos';
+  id: number | string;
+  blockChainName: 'evm' | 'solana' | 'cosmos' | 'near';
   name: string;
   chainId: string;
   imgUrl: string;

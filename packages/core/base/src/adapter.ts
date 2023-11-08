@@ -7,7 +7,8 @@ import type {
   TransactionSignature,
 } from '@solana/web3.js';
 import EventEmitter from 'eventemitter3';
-import { Transaction } from 'web3-core';
+import { FinalExecutionOutcome } from 'near-api-js/lib/providers';
+import { Transaction } from 'web3-types';
 import { type WalletError, WalletNotConnectedError } from './errors';
 import type { SupportedTransactionVersions, TransactionOrVersionedTransaction } from './transaction.js';
 import {
@@ -18,7 +19,8 @@ import {
   TypedMessageV3,
   TypedMessageV4,
   WalletReturnType,
-} from './types';
+} from './types/evm-solana-cosmos';
+import { Account, SignAndSendTransactionParams } from './types/near';
 
 export { EventEmitter };
 
@@ -45,6 +47,15 @@ export interface WalletAdapterCosmosEvents {
   readyStateChange(readyState: WalletReadyState): void;
   changeChainId(chainId: string): void;
 }
+
+export interface WalletAdapterNearEvents {
+  connect(address: string): void;
+  disconnect(): void;
+  error(error: WalletError): void;
+  readyStateChange(readyState: WalletReadyState): void;
+  changeChainId(chainId: string[]): void;
+}
+
 export interface SendTransactionOptions extends SendOptions {
   signers?: Signer[];
 }
@@ -85,6 +96,7 @@ interface WalletAdapterBaseProps<Name extends string = string> {
   readyState: WalletReadyState;
   connecting: boolean;
   chain: string;
+  provider: unknown;
 
   autoConnect(chainId?: string | string[]): Promise<void>;
   connect(
@@ -127,6 +139,23 @@ export interface WalletAdapterSolanaProps<Name extends string = string> extends 
   ): Promise<WalletReturnType<TransactionSignature, string>>;
 }
 
+export interface WalletAdapterNearProps<Name extends string = string> extends WalletAdapterBaseProps<Name> {
+  address: string | null;
+  connected: boolean;
+
+  getAccounts(): Account;
+  signAndSendTransaction({
+    signerId,
+    receiverId,
+    actions,
+  }: SignAndSendTransactionParams): Promise<WalletReturnType<FinalExecutionOutcome, string>>;
+  signAndSendTransactions(
+    transactions: Array<SignAndSendTransactionParams>,
+  ): Promise<WalletReturnType<FinalExecutionOutcome[], string>>;
+
+  verifyOwner(): void;
+}
+
 export type WalletAdapterProps = WalletAdapterSolanaProps | WalletAdapterEVMProps | WalletAdapterCosmosProps;
 
 export type WalletAdapterEVM<Name extends string = string> = WalletAdapterEVMProps<Name> &
@@ -137,6 +166,9 @@ export type WalletAdapterSolana<Name extends string = string> = WalletAdapterSol
 
 export type WalletAdapterCosmos<Name extends string = string> = WalletAdapterCosmosProps<Name> &
   EventEmitter<WalletAdapterCosmosEvents>;
+
+export type WalletAdapterNear<Name extends string = string> = WalletAdapterNearProps<Name> &
+  EventEmitter<WalletAdapterNearEvents>;
 
 // export type WalletAdapter<Name extends string = string> = WalletAdapterProps<Name> & EventEmitter<WalletAdapterEvents>;
 
@@ -180,8 +212,10 @@ export abstract class BaseWalletAdapter<Name extends string = string>
   abstract readyState: WalletReadyState;
   abstract connecting: boolean;
   abstract chain: string;
+  abstract provider: unknown;
 
   async autoConnect(chainId?: string | string[]) {
+    // Just apply on solana wallet
     await this.connect(chainId);
   }
   abstract connect(
@@ -263,6 +297,32 @@ export abstract class BaseWalletAdapterSolana<Name extends string = string>
       ).blockhash;
 
     return transaction;
+  }
+}
+
+export abstract class BaseWalletAdapterNear<Name extends string = string>
+  extends BaseWalletAdapter<Name>
+  implements WalletAdapterNear
+{
+  abstract address: string | null;
+  get connected() {
+    return !!this.address;
+  }
+
+  abstract getAccounts(): Account;
+
+  abstract signAndSendTransaction({
+    signerId,
+    receiverId,
+    actions,
+  }: SignAndSendTransactionParams): Promise<WalletReturnType<FinalExecutionOutcome, string>>;
+
+  abstract signAndSendTransactions(
+    transactions: Array<SignAndSendTransactionParams>,
+  ): Promise<WalletReturnType<FinalExecutionOutcome[], string>>;
+
+  verifyOwner() {
+    throw new Error(`Method not supported by ${this.name}`);
   }
 }
 

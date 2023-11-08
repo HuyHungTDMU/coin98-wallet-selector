@@ -1,35 +1,28 @@
 import {
-  BaseMessageSignerWalletAdapterEVM,
   EventEmitter,
-  WalletDisconnectedError,
-  WalletError,
   WalletName,
   WalletNotConnectedError,
   WalletNotReadyError,
   WalletReturnType,
   WalletSendTransactionError,
   WalletSignMessageError,
-  WalletSignTransactionError,
   TypeConnectError,
   TypedMessage,
   TypedMessageV3,
   TypedMessageV4,
+  WatchAssetType,
+  BaseFullySignerWalletAdapterEVM,
 } from '@coin98t/wallet-adapter-base';
-import {
-  scopePollingDetectionStrategy,
-  WalletAccountError,
-  WalletDisconnectionError,
-  WalletReadyState,
-} from '@coin98t/wallet-adapter-base';
+import { scopePollingDetectionStrategy, WalletAccountError, WalletReadyState } from '@coin98t/wallet-adapter-base';
 
-import type { Transaction } from 'web3-core';
+import type { Transaction } from 'web3-types';
 import iconUrl from './icon';
 interface Coin98Wallet extends EventEmitter {
   disconnect: () => Promise<void>;
   isConnected: (() => boolean) | boolean;
   accountsChanged(account: Array<string>): unknown;
   chainChanged(chainId: string): unknown;
-  request(params: { method: string; params?: string | string[] | unknown }): Promise<string[] | string>;
+  request(params: { method: string; params?: string | string[] | unknown }): Promise<unknown>;
 }
 
 interface Coin98Window extends Window {
@@ -43,7 +36,7 @@ export interface Coin98WalletAdapterConfig {}
 
 export const Coin98WalletName = 'Coin98' as WalletName<'Coin98'>;
 
-export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterEVM {
+export class Coin98WalletAdapterEthereum extends BaseFullySignerWalletAdapterEVM {
   id = 'coin98_ether';
   chain = 'evm';
   name = Coin98WalletName;
@@ -96,6 +89,10 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
     return this._readyState;
   }
 
+  get provider() {
+    return this._wallet;
+  }
+
   async autoConnect() {
     try {
       if (this.connected || this.connecting) return;
@@ -108,19 +105,14 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
       let address: string;
 
       if (isDapp) {
-        // try {
-        //   address = (await wallet.request({ method: 'eth_accounts' }))[0]!;
-        // } catch (error: any) {
-        //   throw new WalletAccountError(error?.message, error);
-        // }
         try {
-          address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+          address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
         } catch (error: any) {
           throw new WalletAccountError(error?.message, error);
         }
       } else {
         try {
-          address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+          address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
         } catch (error: any) {
           throw new WalletAccountError(error?.message, error);
         }
@@ -168,8 +160,8 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
       const wallet = window.coin98.provider!;
       let address: string;
 
-      let currentChainIdWallet;
-      currentChainIdWallet = await wallet.request({ method: 'eth_chainId' });
+      let currentChainIdWallet: string | string[];
+      currentChainIdWallet = (await wallet.request({ method: 'eth_chainId' })) as string | string[];
 
       if (!isDapp) {
         if (
@@ -177,7 +169,7 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
           (typeof currentChainIdWallet === 'string' ? (currentChainIdWallet as string) : currentChainIdWallet[0])
         ) {
           try {
-            address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+            address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
           } catch (error: any) {
             throw new WalletAccountError(error?.message, error);
           }
@@ -189,13 +181,13 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
               params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
             });
 
-            address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+            address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
           } catch (error: any) {
             if (error.code === 4902) {
               try {
                 //Call back add chain
                 await callback?.(error as Error, 'network');
-                address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+                address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
                 await wallet.request({
                   method: 'wallet_switchEthereumChain',
                   params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
@@ -209,17 +201,12 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
           }
         }
       } else {
-        // try {
-        //   address = (await wallet.request({ method: 'eth_accounts' }))[0]!;
-        // } catch (error: any) {
-        //   throw new WalletAccountError(error?.message, error);
-        // }
         if (
           chainId ===
           (typeof currentChainIdWallet === 'string' ? (currentChainIdWallet as string) : currentChainIdWallet[0])
         ) {
           try {
-            address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+            address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
           } catch (error: any) {
             throw new WalletAccountError(error?.message, error);
           }
@@ -231,13 +218,13 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
               params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
             });
 
-            address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+            address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
           } catch (error: any) {
             if (error.code === 4902) {
               try {
                 //Call back add chain
                 await callback?.(error as Error, 'network');
-                address = (await wallet.request({ method: 'eth_requestAccounts' }))[0]!;
+                address = ((await wallet.request({ method: 'eth_requestAccounts' })) as string[])[0]!;
                 await wallet.request({
                   method: 'wallet_switchEthereumChain',
                   params: [{ chainId: !!chainId?.length ? chainId : '0x1' }],
@@ -297,10 +284,6 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
       if (!wallet) throw new WalletNotConnectedError();
 
       try {
-        // const signature = await this.signTransaction(transaction);
-        // console.log('signature', signature);
-
-        //có thể dùng (window.coin9 as any)?.provider.request({})
         const res = (await wallet.request({
           method: 'eth_sendTransaction',
           params: [transaction],
@@ -314,55 +297,6 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
       return { data: null, error: error?.error?.message, isError: true };
     }
   }
-
-  // async signTransaction(transaction: Transaction): Promise<any> {
-  //   try {
-  //     const wallet = this._wallet;
-  //     console.log(' wallet', wallet);
-  //     if (!wallet) throw new WalletNotConnectedError();
-
-  //     try {
-  //       console.log('sig Transaction c98 eth', transaction);
-
-  //       const signature = await wallet.request({
-  //         method: 'eth_sign',
-  //         params: [transaction],
-  //       });
-
-  //       return signature;
-  //     } catch (error: any) {
-  //       throw new WalletSignTransactionError(error?.message, error);
-  //     }
-  //   } catch (error: any) {
-  //     this.emit('error', error);
-  //     throw error;
-  //   }
-  // }
-
-  // async signAllTransactions<T extends Transaction>(transactions: T[]): Promise<T[]> {
-  //   try {
-  //     const wallet = this._wallet;
-  //     if (!wallet) throw new WalletNotConnectedError();
-
-  //     try {
-  //       const response = await wallet.request({ method: 'sol_signAllTransactions', params: [transactions] });
-
-  //       const publicKey = new PublicKey(response.publicKey);
-  //       const signatures = response.signatures;
-
-  //       return transactions.map((transaction, index) => {
-  //         const signature = bs58.decode(signatures[index]!);
-  //         transaction.addSignature(publicKey, signature);
-  //         return transaction;
-  //       });
-  //     } catch (error: any) {
-  //       throw new WalletSignTransactionError(error?.message, error);
-  //     }
-  //   } catch (error: any) {
-  //     this.emit('error', error);
-  //     throw error;
-  //   }
-  // }
 
   async signMessage(message: string): Promise<WalletReturnType<string[], string>> {
     try {
@@ -492,6 +426,89 @@ export class Coin98WalletAdapterEthereum extends BaseMessageSignerWalletAdapterE
           method: 'eth_signTypedData',
           params: [msg, from],
         })) as string;
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
+  async watchAsset(params: WatchAssetType): Promise<WalletReturnType<boolean, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+
+      try {
+        const response = (await wallet.request({
+          method: 'wallet_watchAsset',
+          params,
+        })) as boolean;
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: 'There was an error adding the token. See console for details.', isError: true };
+    }
+  }
+
+  async ethSign(message: string): Promise<WalletReturnType<string, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = (await wallet.request({
+          method: 'eth_sign',
+          params: [from, message],
+        })) as string;
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
+  async getEncryptionPublicKey(): Promise<WalletReturnType<string, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = (await wallet.request({
+          method: 'eth_getEncryptionPublicKey',
+          params: [from],
+        })) as string;
+
+        return { data: response, error: null, isError: false };
+      } catch (error: any) {
+        throw new WalletSignMessageError(error?.message, error);
+      }
+    } catch (error: any) {
+      this.emit('error', error);
+      return { data: null, error: error?.error?.message, isError: true };
+    }
+  }
+
+  async ethDecrypt(message: string, address?: string): Promise<WalletReturnType<unknown, string>> {
+    try {
+      const wallet = this._wallet;
+      if (!wallet) throw new WalletNotConnectedError();
+      try {
+        const from = this._address;
+        const response = await wallet.request({
+          method: 'eth_decrypt',
+          params: [message, address ?? from],
+        });
 
         return { data: response, error: null, isError: false };
       } catch (error: any) {

@@ -1,6 +1,6 @@
 {
   "name": "@coin98t/wallet-adapter-coin98-solana",
-  "version": "0.0.36",
+  "version": "0.0.42",
   "sideEffects": false,
   "types": "./dist/index.d.ts",
   "main": "./dist/index.js",
@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@types/bs58": "^4.0.1",
-    "@coin98t/tsconfig": "workspace:*",
+    "tsconfig": "workspace:*",
     "tsup": "^6.6.3",
     "@solana/web3.js": "^1.58.0"
   },
